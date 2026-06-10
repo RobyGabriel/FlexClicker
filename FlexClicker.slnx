@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="FlexClicker/FlexClicker.vcxproj" Id="0cb2840b-dad0-4564-8649-8799a3eb0796" />
+</Solution>
