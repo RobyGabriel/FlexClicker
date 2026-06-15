@@ -1,14 +1,54 @@
 #include "../Globals.h"
+#include <commctrl.h>
+#pragma comment(lib, "comctl32.lib")
+
+LRESULT CALLBACK GroupBoxSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData) {
+    if (uMsg == WM_PAINT && isDarkMode) {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hwnd, &ps);
+        RECT rc;
+        GetClientRect(hwnd, &rc);
+
+        FillRect(hdc, &rc, hBrushDarkBg);
+
+        char text[128];
+        GetWindowTextA(hwnd, text, sizeof(text));
+        SIZE textSize = { 0 };
+        GetTextExtentPoint32A(hdc, text, strlen(text), &textSize);
+
+        HPEN hPen = CreatePen(PS_SOLID, 1, colorDarkElement);
+        HPEN hOldPen = (HPEN)SelectObject(hdc, hPen);
+        HBRUSH hOldBrush = (HBRUSH)SelectObject(hdc, GetStockObject(NULL_BRUSH));
+
+        int topOffset = textSize.cy / 2;
+        Rectangle(hdc, rc.left, rc.top + topOffset, rc.right, rc.bottom);
+
+        SetTextColor(hdc, colorDarkElement);
+        SetBkColor(hdc, colorDarkBg);
+        SetBkMode(hdc, OPAQUE);
+
+        TextOutA(hdc, rc.left + 10, rc.top, text, strlen(text));
+
+        SelectObject(hdc, hOldPen);
+        SelectObject(hdc, hOldBrush);
+        DeleteObject(hPen);
+
+        EndPaint(hwnd, &ps);
+        return 0;
+    }
+    return DefSubclassProc(hwnd, uMsg, wParam, lParam);
+}
 
 LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (uMsg == WM_GETDLGCODE) return DLGC_WANTALLKEYS;
     switch (uMsg) {
     case WM_CREATE: {
         isSettingsOpen = true;
-        
-        CreateWindowA("BUTTON", "Input Configuration", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 5, 255, 65, hwnd, NULL, NULL, NULL);
+
+        HWND g1 = CreateWindowA("BUTTON", "Input Configuration", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 5, 255, 65, hwnd, NULL, NULL, NULL);
         hBtnMode = CreateWindowA("BUTTON", (currentMode == InputMode::MOUSE ? "Mode: MOUSE" : "Mode: KEYBOARD"), WS_VISIBLE | WS_CHILD, 15, 25, 235, 30, hwnd, (HMENU)15, NULL, NULL);
-        CreateWindowA("BUTTON", "Hotkeys", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 75, 255, 85, hwnd, NULL, NULL, NULL);
+
+        HWND g2 = CreateWindowA("BUTTON", "Hotkeys", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 75, 255, 85, hwnd, NULL, NULL, NULL);
         CreateWindowA("STATIC", "Toggle (ON/OFF):", WS_VISIBLE | WS_CHILD, 15, 95, 120, 20, hwnd, NULL, NULL, NULL);
         hBtnToggleSet = CreateWindowA("BUTTON", GetKeyName(toggleKey).c_str(), WS_VISIBLE | WS_CHILD, 165, 92, 80, 25, hwnd, (HMENU)10, NULL, NULL);
 
@@ -18,24 +58,29 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         hLabelKeySet = CreateWindowA("STATIC", "Simulated Key:", WS_VISIBLE | WS_CHILD, 15, 123, 120, 20, hwnd, NULL, NULL, NULL);
         hBtnKeySet = CreateWindowA("BUTTON", GetKeyName(selectedKey).c_str(), WS_VISIBLE | WS_CHILD, 165, 120, 80, 25, hwnd, (HMENU)14, NULL, NULL);
 
-        CreateWindowA("BUTTON", "Behavior", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 165, 255, 65, hwnd, NULL, NULL, NULL);
+        HWND g3 = CreateWindowA("BUTTON", "Behavior", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 165, 255, 65, hwnd, NULL, NULL, NULL);
         hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 15, 185, 200, 20, hwnd, (HMENU)12, NULL, NULL);
         SendMessage(hCheckOverlay, BM_SETCHECK, showOverlay ? BST_CHECKED : BST_UNCHECKED, 0);
-        
+
         hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter (Randomness)", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 15, 205, 200, 20, hwnd, (HMENU)13, NULL, NULL);
         SendMessage(hCheckJitter, BM_SETCHECK, useJitter ? BST_CHECKED : BST_UNCHECKED, 0);
 
-        CreateWindowA("BUTTON", "Appearance", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 235, 255, 85, hwnd, NULL, NULL, NULL);
+        HWND g4 = CreateWindowA("BUTTON", "Appearance", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 235, 255, 85, hwnd, NULL, NULL, NULL);
         hRadioDark = CreateWindowA("BUTTON", "Dark Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON, 20, 257, 150, 20, hwnd, (HMENU)16, NULL, NULL);
         hRadioLight = CreateWindowA("BUTTON", "Light Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON, 20, 285, 150, 20, hwnd, (HMENU)17, NULL, NULL);
         SendMessage(isDarkMode ? hRadioDark : hRadioLight, BM_SETCHECK, BST_CHECKED, 0);
+
+        SetWindowSubclass(g1, GroupBoxSubclassProc, 101, 0);
+        SetWindowSubclass(g2, GroupBoxSubclassProc, 102, 0);
+        SetWindowSubclass(g3, GroupBoxSubclassProc, 103, 0);
+        SetWindowSubclass(g4, GroupBoxSubclassProc, 104, 0);
 
         bool isKeyboard = (currentMode == InputMode::KEYBOARD);
         ShowWindow(hLabelKeySet, isKeyboard ? SW_SHOW : SW_HIDE);
         ShowWindow(hBtnKeySet, isKeyboard ? SW_SHOW : SW_HIDE);
         ShowWindow(hSwitchLabel, isKeyboard ? SW_HIDE : SW_SHOW);
         ShowWindow(hBtnSwitchSet, isKeyboard ? SW_HIDE : SW_SHOW);
-        
+
         ApplyTheme(hwnd);
         break;
     }
