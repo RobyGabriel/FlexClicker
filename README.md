@@ -8,7 +8,8 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 
 ### ⚙️ Core Functionality
 * **Custom CPS:** Set your desired Clicks Per Second (CPS) precisely.
-* **Dual Mode:** * **Mouse Mode:** Automate left or right clicks. Quickly switch between them using `RCTRL + [Your Custom Key]`.
+* **Dual Mode:** 
+    * **Mouse Mode:** Automate left or right clicks. Quickly switch between them using `RCTRL + [Your Custom Key]`.
     * **Keyboard Mode:** Simulate any keyboard key press repeatedly.
 
 ### 🛠️ Settings & Customization
