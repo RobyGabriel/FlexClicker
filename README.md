@@ -39,7 +39,7 @@ If you just want to use the application, go to the **Releases** page and downloa
 To build it from source:
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/RobyGabriel/FlexClicker.git)
+   git clone [https://github.com/RobyGabriel/FlexClicker.git](https://github.com/RobyGabriel/FlexClicker.git)
    ```
 2. Open the .sln file in Visual Studio.
 
