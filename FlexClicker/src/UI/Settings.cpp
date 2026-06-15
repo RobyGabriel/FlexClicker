@@ -8,7 +8,7 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         
         CreateWindowA("BUTTON", "Input Configuration", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 5, 255, 65, hwnd, NULL, NULL, NULL);
         hBtnMode = CreateWindowA("BUTTON", (currentMode == InputMode::MOUSE ? "Mode: MOUSE" : "Mode: KEYBOARD"), WS_VISIBLE | WS_CHILD, 15, 25, 235, 30, hwnd, (HMENU)15, NULL, NULL);
-        CreateWindowA("BUTTON", "Hotkeys & Keys", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 75, 255, 85, hwnd, NULL, NULL, NULL);
+        CreateWindowA("BUTTON", "Hotkeys", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 75, 255, 85, hwnd, NULL, NULL, NULL);
         CreateWindowA("STATIC", "Toggle (ON/OFF):", WS_VISIBLE | WS_CHILD, 15, 95, 120, 20, hwnd, NULL, NULL, NULL);
         hBtnToggleSet = CreateWindowA("BUTTON", GetKeyName(toggleKey).c_str(), WS_VISIBLE | WS_CHILD, 165, 92, 80, 25, hwnd, (HMENU)10, NULL, NULL);
 

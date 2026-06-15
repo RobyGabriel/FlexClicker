@@ -97,8 +97,71 @@ void ApplyTheme(HWND hwnd) {
 }
 
 std::string GetKeyName(int vk) {
+    if (vk >= '0' && vk <= '9') return std::string(1, (char)vk);
+    if (vk >= 'A' && vk <= 'Z') return std::string(1, (char)vk);
+
+    switch (vk) {
+        case VK_LBUTTON:  return "L-Click";
+        case VK_RBUTTON:  return "R-Click";
+        case VK_MBUTTON:  return "M-Click";
+        case VK_XBUTTON1: return "X1-Click";
+        case VK_XBUTTON2: return "X2-Click";
+        case VK_BACK:     return "Backspace";
+        case VK_TAB:      return "Tab";
+        case VK_RETURN:   return "Enter";
+        case VK_SHIFT:    return "Shift";
+        case VK_CONTROL:  return "Ctrl";
+        case VK_MENU:     return "Alt";
+        case VK_PAUSE:    return "Pause";
+        case VK_CAPITAL:  return "Caps Lock";
+        case VK_ESCAPE:   return "Esc";
+        case VK_SPACE:    return "Space";
+        case VK_PRIOR:    return "Page Up";
+        case VK_NEXT:     return "Page Down";
+        case VK_END:      return "End";
+        case VK_HOME:     return "Home";
+        case VK_LEFT:     return "Left";
+        case VK_UP:       return "Up";
+        case VK_RIGHT:    return "Right";
+        case VK_DOWN:     return "Down";
+        case VK_SNAPSHOT: return "Print Screen";
+        case VK_INSERT:   return "Insert";
+        case VK_DELETE:   return "Delete";
+        case VK_LWIN:     return "L-Win";
+        case VK_RWIN:     return "R-Win";
+        case VK_NUMPAD0:  return "Num 0";
+        case VK_NUMPAD1:  return "Num 1";
+        case VK_NUMPAD2:  return "Num 2";
+        case VK_NUMPAD3:  return "Num 3";
+        case VK_NUMPAD4:  return "Num 4";
+        case VK_NUMPAD5:  return "Num 5";
+        case VK_NUMPAD6:  return "Num 6";
+        case VK_NUMPAD7:  return "Num 7";
+        case VK_NUMPAD8:  return "Num 8";
+        case VK_NUMPAD9:  return "Num 9";
+        case VK_MULTIPLY: return "Num *";
+        case VK_ADD:      return "Num +";
+        case VK_SUBTRACT: return "Num -";
+        case VK_DECIMAL:  return "Num .";
+        case VK_DIVIDE:   return "Num /";
+        case VK_OEM_1:    return ";";
+        case VK_OEM_PLUS: return "+";
+        case VK_OEM_COMMA:return ",";
+        case VK_OEM_MINUS:return "-";
+        case VK_OEM_PERIOD:return ".";
+        case VK_OEM_2:    return "/";
+        case VK_OEM_3:    return "~";
+        case VK_OEM_4:    return "[";
+        case VK_OEM_5:    return "\\";
+        case VK_OEM_6:    return "]";
+        case VK_OEM_7:    return "'";
+    }
+
+    if (vk >= VK_F1 && vk <= VK_F24) return "F" + std::to_string(vk - VK_F1 + 1);
+
     char name[64];
     UINT sc = MapVirtualKeyA(vk, MAPVK_VK_TO_VSC);
-    if (GetKeyNameTextA(sc << 16, name, 64)) return std::string(name);
-    return std::to_string(vk) + " key";
+    if (sc != 0 && GetKeyNameTextA(sc << 16, name, 64)) return std::string(name);
+
+    return "Key " + std::to_string(vk);
 }
