@@ -90,8 +90,23 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         break;
     case WM_CTLCOLORSTATIC: {
         HDC hdcStatic = (HDC)wParam;
+        HWND hwndStatic = (HWND)lParam;
         if (isDarkMode) {
-            SetTextColor(hdcStatic, colorDarkText);
+            SetBkMode(hdcStatic, TRANSPARENT);
+            char className[256];
+            GetClassNameA(hwndStatic, className, 256);
+            if (_stricmp(className, "Button") == 0) {
+                LONG style = GetWindowLong(hwndStatic, GWL_STYLE);
+                if ((style & BS_TYPEMASK) == BS_GROUPBOX) {
+                    SetTextColor(hdcStatic, colorDarkElement);
+                }
+                else {
+                    SetTextColor(hdcStatic, colorDarkText);
+                }
+            }
+            else {
+                SetTextColor(hdcStatic, colorDarkText);
+            }
             SetBkColor(hdcStatic, colorDarkBg);
             return (INT_PTR)hBrushDarkBg;
         }
@@ -105,7 +120,7 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
     }
     case WM_CTLCOLORBTN: {
         if (isDarkMode) {
-            return (INT_PTR)hBrushDarkBg;
+            return (INT_PTR)hBrushDarkElement;
         }
         break;
     }

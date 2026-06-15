@@ -44,6 +44,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             else { SetBkColor(hdcStatic, RGB(255, 0, 0)); SetTextColor(hdcStatic, RGB(255, 255, 255)); return (INT_PTR)hBrushRed; }
         }
         if (isDarkMode) {
+            SetBkMode(hdcStatic, TRANSPARENT);
             SetTextColor(hdcStatic, colorDarkText);
             SetBkColor(hdcStatic, colorDarkBg);
             return (INT_PTR)hBrushDarkBg;
@@ -70,7 +71,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
     case WM_CTLCOLORBTN: {
         if (isDarkMode) {
-            return (INT_PTR)hBrushDarkBg;
+            return (INT_PTR)hBrushDarkElement;
         }
         break;
     }

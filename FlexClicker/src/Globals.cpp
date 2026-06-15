@@ -43,8 +43,8 @@ HWND hCheckJitter     = NULL;
 HWND hRadioDark       = NULL;
 HWND hRadioLight      = NULL;
 
-COLORREF colorDarkBg      = RGB(40, 40, 40);
-COLORREF colorDarkElement = RGB(30, 30, 30);
+COLORREF colorDarkBg      = RGB(35, 35, 35);
+COLORREF colorDarkElement = RGB(130, 130, 130);
 COLORREF colorDarkText    = RGB(240, 240, 240);
 COLORREF colorLightBg     = RGB(255, 255, 255);
 COLORREF colorLightText   = RGB(0, 0, 0);
@@ -62,7 +62,7 @@ void InitBrushes() {
     hBrushDarkBg      = CreateSolidBrush(colorDarkBg);
     hBrushDarkElement = CreateSolidBrush(colorDarkElement);
     hBrushLightBg     = CreateSolidBrush(colorLightBg);
-    hBrushEditDark    = CreateSolidBrush(RGB(45, 45, 45));
+    hBrushEditDark    = CreateSolidBrush(colorDarkElement);
 }
 
 void CleanupBrushes() {
@@ -84,10 +84,26 @@ void ApplyTheme(HWND hwnd) {
     SetClassLongPtr(hwnd, GCLP_HBRBACKGROUND, (LONG_PTR)hbr);
 
     const wchar_t* themeName = isDarkMode ? L"DarkMode_Explorer" : NULL;
+    SetWindowTheme(hwnd, themeName, NULL);
     
     EnumChildWindows(hwnd, [](HWND child, LPARAM lp) -> BOOL {
         const wchar_t* tName = (const wchar_t*)lp;
-        SetWindowTheme(child, tName, NULL);
+        
+        char className[256];
+        if (GetClassNameA(child, className, 256)) {
+            if (tName != NULL && _stricmp(className, "Button") == 0) {
+                LONG style = GetWindowLong(child, GWL_STYLE);
+                UINT type = style & BS_TYPEMASK;
+                if (type == BS_AUTORADIOBUTTON || type == BS_RADIOBUTTON || type == BS_GROUPBOX || type == BS_AUTOCHECKBOX || type == BS_CHECKBOX) {
+                    SetWindowTheme(child, L"", L""); 
+                } else {
+                    SetWindowTheme(child, tName, NULL);
+                }
+            } else {
+                SetWindowTheme(child, tName, NULL);
+            }
+        }
+
         RedrawWindow(child, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
         return TRUE;
     }, (LPARAM)themeName);

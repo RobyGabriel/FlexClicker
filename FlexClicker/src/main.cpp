@@ -5,6 +5,8 @@
 #include "UI/Overlay.h"
 #include <thread>
 
+#pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
     InitBrushes();
     std::thread t(LogicAutoclicker);
@@ -12,11 +14,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     WNDCLASSA wc = { 0 }, wcs = { 0 }, wco = { 0 };
     wc.lpfnWndProc = WindowProc; wc.hInstance = hInstance; wc.lpszClassName = "FlexClicker";
-    wc.hCursor = LoadCursor(NULL, IDC_ARROW); wc.hbrBackground = NULL;
+    wc.hCursor = LoadCursor(NULL, IDC_ARROW); wc.hbrBackground = hBrushDarkBg;
     RegisterClassA(&wc);
 
     wcs.lpfnWndProc = SettingsProc; wcs.hInstance = hInstance; wcs.lpszClassName = "FlexSettings";
-    wcs.hCursor = LoadCursor(NULL, IDC_ARROW); wcs.hbrBackground = NULL;
+    wcs.hCursor = LoadCursor(NULL, IDC_ARROW); wcs.hbrBackground = hBrushDarkBg;
     RegisterClassA(&wcs);
 
     wco.lpfnWndProc = OverlayProc; wco.hInstance = hInstance; wco.lpszClassName = "FlexOverlay";
