@@ -4,6 +4,12 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 
 ---
 
+## ⚠️ Disclaimer & Antivirus Notes
+* **Anti-Cheat Warning:** Use this tool responsibly. Using autoclickers in multiplayer games may violate their Terms of Service and result in a ban. The "Jitter" feature reduces detection risks but does not guarantee immunity.
+* **False Positives:** This application uses low-level Windows APIs (SendInput, GetAsyncKeyState, and high-resolution timers) to simulate input and detect hotkeys. As a result, some antivirus software may incorrectly identify it as suspicious or flag it as a false positive. The source code is fully open and safe to audit.
+
+---
+
 ## ✨ Features
 
 ### ⚙️ Core Functionality
