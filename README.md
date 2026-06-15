@@ -76,3 +76,7 @@ To build it from source:
 * Framework: Native Windows API (WinAPI) for GUI, Global Hotkeys, and   Input Simulation.
 
 * IDE: Visual Studio
+
+## 🔒 Copyright & Terms of Use
+
+This project is personal intellectual property. **All rights reserved.** You are free to view the source code, download it, and compile it for personal use. However, **you do not have permission** to copy, modify, redistribute, or use any part of this source code in other public or commercial projects without explicit written consent from the author.
