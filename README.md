@@ -15,7 +15,7 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 ### ⚙️ Core Functionality
 * **Custom CPS:** Set your desired Clicks Per Second (CPS) precisely.
 * **Dual Mode:** 
-    * **Mouse Mode:** Automate left or right clicks. Quickly switch between them using `RCTRL + [Your Custom Key]`.
+    * **Mouse Mode:** Automate left or right clicks. Quickly switch between them using <kbd>RCTRL</kbd> + <kbd>Custom Key</kbd>.
     * **Keyboard Mode:** Simulate any keyboard key press repeatedly.
 
 ### 🛠️ Settings & Customization
@@ -47,7 +47,7 @@ To build it from source:
    ```bash
    git clone https://github.com/RobyGabriel/FlexClicker.git
    ```
-2. Open the .slnx file in Visual Studio.
+2. Open the FlexClicker.slnx file in Visual Studio.
 
 3. Set the build configuration to Release and your target architecture (e.g., x64).
 
@@ -61,7 +61,7 @@ To build it from source:
 
 3. **Choose Mode:**
 
-    * **Mouse Mode:** Use `RCTRL + [Your Custom Key]` to quickly swap between Left and Right click.
+    * **Mouse Mode:** Use <kbd>RCTRL</kbd> + <kbd>Custom Key</kbd> to quickly swap between Left and Right click.
 
     * **Keyboard Mode:** Select the specific key you want to automate.
 
