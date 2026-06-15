@@ -3,8 +3,7 @@
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
     case WM_CREATE:
-        hBrushRed = CreateSolidBrush(RGB(255, 0, 0));
-        hBrushGreen = CreateSolidBrush(RGB(0, 255, 0));
+        hMainWnd = hwnd;
         CreateWindowA("STATIC", "Set new CPS:", WS_VISIBLE | WS_CHILD, 20, 10, 120, 20, hwnd, NULL, NULL, NULL);
         hEditCPS = CreateWindowA("EDIT", "10", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER, 140, 10, 50, 20, hwnd, NULL, NULL, NULL);
         CreateWindowA("BUTTON", "APPLY", WS_VISIBLE | WS_CHILD, 20, 35, 170, 30, hwnd, (HMENU)1, NULL, NULL);
@@ -16,6 +15,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         hClickLabel = CreateWindowA("STATIC", "CLICK:", WS_VISIBLE | WS_CHILD, 20, 170, 80, 20, hwnd, NULL, NULL, NULL);
         hTypeLabel = CreateWindowA("STATIC", "LEFT", WS_VISIBLE | WS_CHILD, 110, 170, 80, 20, hwnd, NULL, NULL, NULL);
         SetTimer(hwnd, 1, 100, NULL);
+        ApplyTheme(hwnd);
         break;
     case WM_TIMER:
         if (wParam == 1) {
@@ -43,7 +43,38 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             if (clickerActive) { SetBkColor(hdcStatic, RGB(0, 255, 0)); return (INT_PTR)hBrushGreen; }
             else { SetBkColor(hdcStatic, RGB(255, 0, 0)); SetTextColor(hdcStatic, RGB(255, 255, 255)); return (INT_PTR)hBrushRed; }
         }
-    } break;
+        if (isDarkMode) {
+            SetTextColor(hdcStatic, colorDarkText);
+            SetBkColor(hdcStatic, colorDarkBg);
+            return (INT_PTR)hBrushDarkBg;
+        }
+        break;
+    }
+
+    case WM_CTLCOLOREDIT: {
+        HDC hdcEdit = (HDC)wParam;
+        if (isDarkMode) {
+            SetTextColor(hdcEdit, colorDarkText);
+            SetBkColor(hdcEdit, colorDarkElement);
+            return (INT_PTR)hBrushDarkElement;
+        }
+        break;
+    }
+
+    case WM_CTLCOLORDLG: {
+        if (isDarkMode) {
+            return (INT_PTR)hBrushDarkBg;
+        }
+        break;
+    }
+
+    case WM_CTLCOLORBTN: {
+        if (isDarkMode) {
+            return (INT_PTR)hBrushDarkBg;
+        }
+        break;
+    }
+
     case WM_COMMAND:
         if (LOWORD(wParam) == 1) {
             char buffer[10];
@@ -54,15 +85,15 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         if (LOWORD(wParam) == 2) {
             if (!isSettingsOpen) {
                 HWND hSet = CreateWindowExA(0, "FlexSettings", "Settings", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
-                    500, 200, 280, 280, hwnd, NULL, GetModuleHandle(NULL), NULL);
+                    500, 200, 280, 360, hwnd, NULL, GetModuleHandle(NULL), NULL);
                 ShowWindow(hSet, SW_SHOW);
                 SetFocus(hSet);
             }
         }
         break;
     case WM_DESTROY:
-        DeleteObject(hBrushRed); DeleteObject(hBrushGreen);
-        KillTimer(hwnd, 1); PostQuitMessage(0);
+        KillTimer(hwnd, 1); 
+        PostQuitMessage(0);
         return 0;
     }
     return DefWindowProcA(hwnd, uMsg, wParam, lParam);

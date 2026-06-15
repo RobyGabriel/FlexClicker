@@ -3,24 +3,42 @@
 LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (uMsg == WM_GETDLGCODE) return DLGC_WANTALLKEYS;
     switch (uMsg) {
-    case WM_CREATE:
+    case WM_CREATE: {
         isSettingsOpen = true;
-        CreateWindowA("STATIC", "Toggle ON/OFF:", WS_VISIBLE | WS_CHILD, 10, 13, 200, 20, hwnd, NULL, NULL, NULL);
-        hBtnToggleSet = CreateWindowA("BUTTON", GetKeyName(toggleKey).c_str(), WS_VISIBLE | WS_CHILD, 150, 10, 100, 25, hwnd, (HMENU)10, NULL, NULL);
-        hCheckOverlay = CreateWindowA("BUTTON", "Show Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 10, 60, 200, 20, hwnd, (HMENU)12, NULL, NULL);
+        
+        CreateWindowA("BUTTON", "Input Configuration", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 5, 255, 65, hwnd, NULL, NULL, NULL);
+        hBtnMode = CreateWindowA("BUTTON", (currentMode == InputMode::MOUSE ? "Mode: MOUSE" : "Mode: KEYBOARD"), WS_VISIBLE | WS_CHILD, 15, 25, 235, 30, hwnd, (HMENU)15, NULL, NULL);
+        CreateWindowA("BUTTON", "Hotkeys & Keys", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 75, 255, 85, hwnd, NULL, NULL, NULL);
+        CreateWindowA("STATIC", "Toggle (ON/OFF):", WS_VISIBLE | WS_CHILD, 15, 95, 120, 20, hwnd, NULL, NULL, NULL);
+        hBtnToggleSet = CreateWindowA("BUTTON", GetKeyName(toggleKey).c_str(), WS_VISIBLE | WS_CHILD, 165, 92, 80, 25, hwnd, (HMENU)10, NULL, NULL);
+
+        hSwitchLabel = CreateWindowA("STATIC", "Switch (L/R): RCTRL+", WS_VISIBLE | WS_CHILD, 15, 123, 145, 20, hwnd, NULL, NULL, NULL);
+        hBtnSwitchSet = CreateWindowA("BUTTON", GetKeyName(switchKey).c_str(), WS_VISIBLE | WS_CHILD, 165, 120, 80, 25, hwnd, (HMENU)11, NULL, NULL);
+
+        hLabelKeySet = CreateWindowA("STATIC", "Simulated Key:", WS_VISIBLE | WS_CHILD, 15, 123, 120, 20, hwnd, NULL, NULL, NULL);
+        hBtnKeySet = CreateWindowA("BUTTON", GetKeyName(selectedKey).c_str(), WS_VISIBLE | WS_CHILD, 165, 120, 80, 25, hwnd, (HMENU)14, NULL, NULL);
+
+        CreateWindowA("BUTTON", "Behavior", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 165, 255, 65, hwnd, NULL, NULL, NULL);
+        hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 15, 185, 200, 20, hwnd, (HMENU)12, NULL, NULL);
         SendMessage(hCheckOverlay, BM_SETCHECK, showOverlay ? BST_CHECKED : BST_UNCHECKED, 0);
-        hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter (Random)", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 10, 85, 200, 20, hwnd, (HMENU)13, NULL, NULL);
+        
+        hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter (Randomness)", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 15, 205, 200, 20, hwnd, (HMENU)13, NULL, NULL);
         SendMessage(hCheckJitter, BM_SETCHECK, useJitter ? BST_CHECKED : BST_UNCHECKED, 0);
-        hLabelKeySet = CreateWindowA("STATIC", "Key to simulate:", WS_VISIBLE | WS_CHILD, 10, 167, 200, 20, hwnd, NULL, NULL, NULL);
-        hBtnKeySet = CreateWindowA("BUTTON", GetKeyName(selectedKey).c_str(), WS_VISIBLE | WS_CHILD, 150, 164, 100, 25, hwnd, (HMENU)14, NULL, NULL);
-        hBtnMode = CreateWindowA("BUTTON", (currentMode == InputMode::MOUSE ? "Mode: MOUSE" : "Mode: KEYBOARD"), WS_VISIBLE | WS_CHILD, 10, 135, 240, 25, hwnd, (HMENU)15, NULL, NULL);
-        hSwitchLabel = CreateWindowA("STATIC", "Switch L/R: RCTRL + ", WS_VISIBLE | WS_CHILD, 10, 167, 200, 20, hwnd, NULL, NULL, NULL);
-        hBtnSwitchSet = CreateWindowA("BUTTON", GetKeyName(switchKey).c_str(), WS_VISIBLE | WS_CHILD, 150, 164, 100, 25, hwnd, (HMENU)11, NULL, NULL);
-        if (currentMode == InputMode::MOUSE) {
-            ShowWindow(hLabelKeySet, SW_HIDE);
-            ShowWindow(hBtnKeySet, SW_HIDE);
-        }
+
+        CreateWindowA("BUTTON", "Appearance", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 235, 255, 85, hwnd, NULL, NULL, NULL);
+        hRadioDark = CreateWindowA("BUTTON", "Dark Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON, 20, 257, 150, 20, hwnd, (HMENU)16, NULL, NULL);
+        hRadioLight = CreateWindowA("BUTTON", "Light Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON, 20, 285, 150, 20, hwnd, (HMENU)17, NULL, NULL);
+        SendMessage(isDarkMode ? hRadioDark : hRadioLight, BM_SETCHECK, BST_CHECKED, 0);
+
+        bool isKeyboard = (currentMode == InputMode::KEYBOARD);
+        ShowWindow(hLabelKeySet, isKeyboard ? SW_SHOW : SW_HIDE);
+        ShowWindow(hBtnKeySet, isKeyboard ? SW_SHOW : SW_HIDE);
+        ShowWindow(hSwitchLabel, isKeyboard ? SW_HIDE : SW_SHOW);
+        ShowWindow(hBtnSwitchSet, isKeyboard ? SW_HIDE : SW_SHOW);
+        
+        ApplyTheme(hwnd);
         break;
+    }
     case WM_COMMAND:
         if (LOWORD(wParam) == 10) {
             waitingForToggleKey = true;
@@ -53,9 +71,53 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             ShowWindow(hBtnSwitchSet, isKeyboard ? SW_HIDE : SW_SHOW);
             ShowWindow(hSwitchLabel, isKeyboard ? SW_HIDE : SW_SHOW);
         }
+        if (LOWORD(wParam) == 16) {
+            if (SendMessage(hRadioDark, BM_GETCHECK, 0, 0) == BST_CHECKED) {
+                isDarkMode = true;
+                ApplyTheme(hwnd);
+                ApplyTheme(hMainWnd);
+            }
+        }
+        if (LOWORD(wParam) == 17) {
+            if (SendMessage(hRadioLight, BM_GETCHECK, 0, 0) == BST_CHECKED) {
+                isDarkMode = false;
+                ApplyTheme(hwnd);
+                ApplyTheme(hMainWnd);
+            }
+        }
         break;
     case WM_SETFOCUS:
         break;
+    case WM_CTLCOLORSTATIC: {
+        HDC hdcStatic = (HDC)wParam;
+        if (isDarkMode) {
+            SetTextColor(hdcStatic, colorDarkText);
+            SetBkColor(hdcStatic, colorDarkBg);
+            return (INT_PTR)hBrushDarkBg;
+        }
+        break;
+    }
+    case WM_CTLCOLORDLG: {
+        if (isDarkMode) {
+            return (INT_PTR)hBrushDarkBg;
+        }
+        break;
+    }
+    case WM_CTLCOLORBTN: {
+        if (isDarkMode) {
+            return (INT_PTR)hBrushDarkBg;
+        }
+        break;
+    }
+    case WM_CTLCOLOREDIT: {
+        HDC hdcEdit = (HDC)wParam;
+        if (isDarkMode) {
+            SetTextColor(hdcEdit, colorDarkText);
+            SetBkColor(hdcEdit, colorDarkElement);
+            return (INT_PTR)hBrushDarkElement;
+        }
+        break;
+    }
     case WM_KEYDOWN:
         if (waitingForToggleKey) {
             toggleKey = (int)wParam;

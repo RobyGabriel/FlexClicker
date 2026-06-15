@@ -22,6 +22,7 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 * **Custom Toggle Key:** Bind any key to start/stop the clicker instantly.
 * **Enable Jitter:** Randomizes the delay between clicks to simulate human behavior and bypass basic anti-cheat detection.
 * **Show Overlay:** Toggle a sleek, on-screen display.
+* **Theme Support:** Switch seamlessly between **Dark Theme** and **Light Theme** to match your desktop setup.
 
 ### 📺 Smart Overlay
 Keep track of your settings in real-time with a lightweight, on-screen overlay showing:
@@ -65,7 +66,10 @@ To build it from source:
 
     * **Keyboard Mode:** Select the specific key you want to automate.
 
-4. **Tweak Settings:** (Optional) Check **Enable Jitter** for natural timing variations or **Show Overlay** to see your stats on screen.
+4. **Tweak Settings:** (Optional) 
+    * Check **Enable Jitter** for natural timing variations.
+    * Toggle **Show Overlay** to see your stats on screen.
+    * Switch between **Dark Theme** and **Light Theme** using the theme toggle.
 
 5. **Activate:** Press your **Custom Toggle Key** to Start/Stop the automation!
 
