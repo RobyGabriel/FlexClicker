@@ -9,15 +9,14 @@ LRESULT CALLBACK OverlayProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         std::string text = clickerActive ? "ON | " : "OFF | ";
 
         if (currentMode.load() == InputMode::KEYBOARD) {
-            text += "KEY: " + GetKeyName(selectedKey.load());
+            text += GetKeyName(selectedKey.load());
         }
         else {
-            text += "MOUSE: ";
-            text += isLeftClick ? "L" : "R";
+            text += isLeftClick ? "LMB" : "RMB";
         }
 
         text += " | " + std::to_string(cps.load()) + " CPS";
-        if (useJitter) text += " (J)";
+        if (useJitter) text += " | Jitter";
 
         SetTextColor(hdc, clickerActive ? RGB(0, 255, 0) : RGB(255, 0, 0));
         SetBkMode(hdc, TRANSPARENT);
