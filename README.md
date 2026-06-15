@@ -1,6 +1,6 @@
-# 🖱️ Advanced AutoClicker (Mouse & Keyboard)
+# 🖱️ FlexClicker
 
-A lightweight, high-performance, and feature-rich AutoClicker built natively in C++ using the WinAPI. Designed to automate both mouse clicks and keyboard presses with precision and zero overhead.
+A lightweight, high-performance, and feature-rich autoclicker built natively in C++ using the WinAPI. Designed to automate both mouse clicks and keyboard presses with precision and zero overhead.
 
 ---
 
@@ -13,7 +13,7 @@ A lightweight, high-performance, and feature-rich AutoClicker built natively in 
 
 ### 🛠️ Settings & Customization
 * **Custom Toggle Key:** Bind any key to start/stop the clicker instantly.
-* **Enable Jitter:** Adds natural, micro-mouse movements (jitter) to simulate human behavior and bypass basic anti-cheat detection.
+* **Enable Jitter:** Randomizes the delay between clicks to simulate human behavior and bypass basic anti-cheat detection.
 * **Show Overlay:** Toggle a sleek, on-screen display.
 
 ### 📺 Smart Overlay
@@ -58,7 +58,7 @@ To build it from source:
 
         Keyboard Mode: Select the specific key you want to automate.
 
-    (Optional) Check Enable Jitter for natural movement or Show Overlay to see your stats on screen.
+    (Optional) Check Enable Jitter for natural timing variations or Show Overlay to see your stats on screen.
 
     Press your Custom Toggle Key to Start/Stop the automation!
 
