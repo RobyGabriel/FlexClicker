@@ -32,6 +32,7 @@ extern COLORREF colorDarkText;
 extern COLORREF colorLightBg;
 extern COLORREF colorLightText;
 extern HWND hRadioDark, hRadioLight;
+extern HFONT hFont;
 
 void InitBrushes();
 void CleanupBrushes();

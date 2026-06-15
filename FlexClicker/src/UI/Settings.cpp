@@ -6,6 +6,9 @@ LRESULT CALLBACK GroupBoxSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
     if (uMsg == WM_PAINT && isDarkMode) {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hwnd, &ps);
+
+        HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);
+
         RECT rc;
         GetClientRect(hwnd, &rc);
 
@@ -31,6 +34,7 @@ LRESULT CALLBACK GroupBoxSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 
         SelectObject(hdc, hOldPen);
         SelectObject(hdc, hOldBrush);
+        SelectObject(hdc, hOldFont);
         DeleteObject(hPen);
 
         EndPaint(hwnd, &ps);

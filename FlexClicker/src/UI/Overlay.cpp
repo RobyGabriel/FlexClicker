@@ -6,6 +6,8 @@ LRESULT CALLBACK OverlayProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hwnd, &ps);
 
+        HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);
+
         std::string text = clickerActive ? "ON | " : "OFF | ";
 
         if (currentMode.load() == InputMode::KEYBOARD) {
@@ -21,6 +23,7 @@ LRESULT CALLBACK OverlayProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         SetTextColor(hdc, clickerActive ? RGB(0, 255, 0) : RGB(255, 0, 0));
         SetBkMode(hdc, TRANSPARENT);
         TextOutA(hdc, 5, 5, text.c_str(), (int)text.length());
+        SelectObject(hdc, hOldFont);
         EndPaint(hwnd, &ps);
     } break;
     case WM_NCHITTEST: return HTCAPTION;

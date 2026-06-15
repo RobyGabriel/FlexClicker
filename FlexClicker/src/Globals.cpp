@@ -56,6 +56,8 @@ HBRUSH hBrushDarkElement  = NULL;
 HBRUSH hBrushLightBg      = NULL;
 HBRUSH hBrushEditDark     = NULL;
 
+HFONT hFont = NULL;
+
 void InitBrushes() {
     hBrushRed         = CreateSolidBrush(RGB(255, 0, 0));
     hBrushGreen       = CreateSolidBrush(RGB(0, 255, 0));
@@ -63,6 +65,9 @@ void InitBrushes() {
     hBrushDarkElement = CreateSolidBrush(colorDarkElement);
     hBrushLightBg     = CreateSolidBrush(colorLightBg);
     hBrushEditDark    = CreateSolidBrush(colorDarkElement);
+    hFont = CreateFontA(15, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+        DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+        CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Consolas");
 }
 
 void CleanupBrushes() {
@@ -72,6 +77,10 @@ void CleanupBrushes() {
     DeleteObject(hBrushDarkElement);
     DeleteObject(hBrushLightBg);
     DeleteObject(hBrushEditDark);
+    
+    if (hFont) {
+        DeleteObject(hFont);
+    }
 }
 
 void ApplyTheme(HWND hwnd) {
@@ -83,11 +92,15 @@ void ApplyTheme(HWND hwnd) {
     HBRUSH hbr = isDarkMode ? hBrushDarkBg : hBrushLightBg;
     SetClassLongPtr(hwnd, GCLP_HBRBACKGROUND, (LONG_PTR)hbr);
 
+    SendMessageA(hwnd, WM_SETFONT, (WPARAM)hFont, TRUE);
+
     const wchar_t* themeName = isDarkMode ? L"DarkMode_Explorer" : NULL;
     SetWindowTheme(hwnd, themeName, NULL);
     
     EnumChildWindows(hwnd, [](HWND child, LPARAM lp) -> BOOL {
         const wchar_t* tName = (const wchar_t*)lp;
+
+        SendMessageA(child, WM_SETFONT, (WPARAM)hFont, TRUE);
         
         char className[256];
         if (GetClassNameA(child, className, 256)) {
