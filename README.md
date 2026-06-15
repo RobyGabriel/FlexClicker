@@ -73,7 +73,7 @@ To build it from source:
 
 * Language: C++ (ISO C++17 or newer)
 
-* Framework: Native Windows API (WinAPI) for GUI, Global Hotkeys, and   Input Simulation.
+* Framework: Native Windows API (WinAPI) for GUI, Global Hotkeys, and Input Simulation.
 
 * IDE: Visual Studio
 
