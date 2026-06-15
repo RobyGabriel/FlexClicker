@@ -75,7 +75,7 @@ To build it from source:
 
 ## 🛠️ Built With
 
-* Language: C++ (ISO C++17 or newer)
+* Language: C++ (ISO C++20 or newer)
 
 * Framework: Native Windows API (WinAPI) for GUI, Global Hotkeys, and Input Simulation.
 
