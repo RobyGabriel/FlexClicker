@@ -51,7 +51,7 @@ To build it from source:
 
 3. Set the build configuration to Release and your target architecture (e.g., x64).
 
-4. Build the solution (Ctrl + Shift + B).
+4. Build the solution (<kbd>Ctrl<kbd> + <kbd>Shift<kbd> + <kbd>B<kbd>).
 
 ## 🎮 How To Use
 
