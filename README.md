@@ -49,24 +49,24 @@ To build it from source:
 
 ## 🎮 How To Use
 
-    Open the application and set your desired CPS.
+1. Open the application and set your desired CPS.
 
-    Go to Settings to configure your preferred shortcut keys.
+2. Go to Settings to configure your preferred shortcut keys.
 
-    Choose your Mode:
+3. Choose your Mode:
 
-        Mouse Mode: Use RCTRL + [Your Custom Key] to quickly swap between Left and Right click.
+    Mouse Mode: Use RCTRL + [Your Custom Key] to quickly swap between Left and Right click.
 
-        Keyboard Mode: Select the specific key you want to automate.
+    Keyboard Mode: Select the specific key you want to automate.
 
-    (Optional) Check Enable Jitter for natural timing variations or Show Overlay to see your stats on screen.
+4. (Optional) Check Enable Jitter for natural timing variations or Show Overlay to see your stats on screen.
 
-    Press your Custom Toggle Key to Start/Stop the automation!
+5. Press your Custom Toggle Key to Start/Stop the automation!
 
 ## 🛠️ Built With
 
-    Language: C++ (ISO C++17 or newer)
+* Language: C++ (ISO C++17 or newer)
 
-    Framework: Native Windows API (WinAPI) for GUI, Global Hotkeys, and Input Simulation.
+* Framework: Native Windows API (WinAPI) for GUI, Global Hotkeys, and   Input Simulation.
 
-    IDE: Visual Studio
+* IDE: Visual Studio
