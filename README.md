@@ -49,19 +49,19 @@ To build it from source:
 
 ## 🎮 How To Use
 
-1. Open the application and set your desired CPS.
+1. **Set CPS:** Open the application and set your desired CPS.
 
-2. Go to Settings to configure your preferred shortcut keys.
+2. **Configure Keys:** Go to Settings to configure your preferred shortcut keys.
 
-3. Choose your Mode:
+3. **Choose Mode:**
 
-    Mouse Mode: Use RCTRL + [Your Custom Key] to quickly swap between Left and Right click.
+    * **Mouse Mode:** Use `RCTRL + [Your Custom Key]` to quickly swap between Left and Right click.
 
-    Keyboard Mode: Select the specific key you want to automate.
+    * **Keyboard Mode:** Select the specific key you want to automate.
 
-4. (Optional) Check Enable Jitter for natural timing variations or Show Overlay to see your stats on screen.
+4. **Tweak Settings:** (Optional) Check **Enable Jitter** for natural timing variations or **Show Overlay** to see your stats on screen.
 
-5. Press your Custom Toggle Key to Start/Stop the automation!
+5. **Activate:** Press your **Custom Toggle Key** to Start/Stop the automation!
 
 ## 🛠️ Built With
 
