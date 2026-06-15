@@ -41,7 +41,7 @@ To build it from source:
    ```bash
    git clone https://github.com/RobyGabriel/FlexClicker.git
    ```
-2. Open the .sln file in Visual Studio.
+2. Open the .slnx file in Visual Studio.
 
 3. Set the build configuration to Release and your target architecture (e.g., x64).
 
