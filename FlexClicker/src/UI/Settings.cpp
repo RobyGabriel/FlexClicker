@@ -81,21 +81,21 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         HWND g3 = CreateWindowA("BUTTON", "Behavior", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
             ScalePixels(10, hwnd), ScalePixels(215, hwnd), ScalePixels(265, hwnd), ScalePixels(75, hwnd), hwnd, NULL, NULL, NULL);
 
-        hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX,
+        hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX | BS_VCENTER,
             ScalePixels(20, hwnd), ScalePixels(237, hwnd), ScalePixels(240, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)12, NULL, NULL);
         SendMessage(hCheckOverlay, BM_SETCHECK, showOverlay ? BST_CHECKED : BST_UNCHECKED, 0);
 
-        hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX,
+        hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX | BS_VCENTER,
             ScalePixels(20, hwnd), ScalePixels(262, hwnd), ScalePixels(240, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)13, NULL, NULL);
         SendMessage(hCheckJitter, BM_SETCHECK, useJitter ? BST_CHECKED : BST_UNCHECKED, 0);
 
         HWND g4 = CreateWindowA("BUTTON", "Appearance", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
             ScalePixels(10, hwnd), ScalePixels(300, hwnd), ScalePixels(265, hwnd), ScalePixels(85, hwnd), hwnd, NULL, NULL, NULL);
 
-        hRadioDark = CreateWindowA("BUTTON", "Dark Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
+        hRadioDark = CreateWindowA("BUTTON", "Dark Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON | BS_VCENTER,
             ScalePixels(25, hwnd), ScalePixels(322, hwnd), ScalePixels(200, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)16, NULL, NULL);
 
-        hRadioLight = CreateWindowA("BUTTON", "Light Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
+        hRadioLight = CreateWindowA("BUTTON", "Light Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON | BS_VCENTER,
             ScalePixels(25, hwnd), ScalePixels(352, hwnd), ScalePixels(200, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)17, NULL, NULL);
         SendMessage(isDarkMode ? hRadioDark : hRadioLight, BM_SETCHECK, BST_CHECKED, 0);
 

@@ -7,11 +7,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
         SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(290, hwnd), ScalePixels(290, hwnd), SWP_NOMOVE | SWP_NOZORDER);
 
-        CreateWindowA("STATIC", "Set new CPS:", WS_VISIBLE | WS_CHILD,
-            ScalePixels(20, hwnd), ScalePixels(15, hwnd), ScalePixels(150, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+        CreateWindowA("STATIC", "Set new CPS:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
+            ScalePixels(20, hwnd), ScalePixels(15, hwnd), ScalePixels(130, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
-        hEditCPS = CreateWindowA("EDIT", "10", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-            ScalePixels(190, hwnd), ScalePixels(12, hwnd), ScalePixels(60, hwnd), ScalePixels(30, hwnd), hwnd, NULL, NULL, NULL);
+        hEditCPS = CreateWindowA("EDIT", "10", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER | ES_CENTER,
+            ScalePixels(150, hwnd), ScalePixels(15, hwnd), ScalePixels(100, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
         CreateWindowA("BUTTON", "APPLY", WS_VISIBLE | WS_CHILD,
             ScalePixels(20, hwnd), ScalePixels(55, hwnd), ScalePixels(230, hwnd), ScalePixels(35, hwnd), hwnd, (HMENU)1, NULL, NULL);
@@ -19,22 +19,22 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         CreateWindowA("BUTTON", "SETTINGS", WS_VISIBLE | WS_CHILD,
             ScalePixels(20, hwnd), ScalePixels(95, hwnd), ScalePixels(230, hwnd), ScalePixels(35, hwnd), hwnd, (HMENU)2, NULL, NULL);
 
-        CreateWindowA("STATIC", "CPS:", WS_VISIBLE | WS_CHILD,
-            ScalePixels(20, hwnd), ScalePixels(145, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+        CreateWindowA("STATIC", "CPS:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
+            ScalePixels(20, hwnd), ScalePixels(145, hwnd), ScalePixels(100, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
-        hCurrentCPSLabel = CreateWindowA("STATIC", "10", WS_VISIBLE | WS_CHILD,
+        hCurrentCPSLabel = CreateWindowA("STATIC", "10", WS_VISIBLE | WS_CHILD | SS_RIGHT | SS_CENTERIMAGE,
             ScalePixels(140, hwnd), ScalePixels(145, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
-        CreateWindowA("STATIC", "STATUS:", WS_VISIBLE | WS_CHILD,
-            ScalePixels(20, hwnd), ScalePixels(180, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+        CreateWindowA("STATIC", "STATUS:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
+            ScalePixels(20, hwnd), ScalePixels(180, hwnd), ScalePixels(100, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
-        hStatusLabel = CreateWindowA("STATIC", "STOPPED", WS_VISIBLE | WS_CHILD,
-            ScalePixels(140, hwnd), ScalePixels(180, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+        hStatusLabel = CreateWindowA("STATIC", "STOPPED", WS_VISIBLE | WS_CHILD | SS_CENTER | SS_CENTERIMAGE,
+            ScalePixels(150, hwnd), ScalePixels(180, hwnd), ScalePixels(100, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
-        hClickLabel = CreateWindowA("STATIC", "CLICK:", WS_VISIBLE | WS_CHILD,
-            ScalePixels(20, hwnd), ScalePixels(215, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+        hClickLabel = CreateWindowA("STATIC", "CLICK:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
+            ScalePixels(20, hwnd), ScalePixels(215, hwnd), ScalePixels(100, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
-        hTypeLabel = CreateWindowA("STATIC", "LEFT", WS_VISIBLE | WS_CHILD,
+        hTypeLabel = CreateWindowA("STATIC", "LEFT", WS_VISIBLE | WS_CHILD | SS_RIGHT | SS_CENTERIMAGE,
             ScalePixels(140, hwnd), ScalePixels(215, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
         EnumChildWindows(hwnd, [](HWND hChild, LPARAM lp) -> BOOL {
