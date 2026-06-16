@@ -6,6 +6,30 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 
 ---
 
+## 📸 Preview & Screenshots
+
+| 🌙 Dark Theme (Main) | ☀️ Light Theme (Main) |
+| :---: | :---: |
+| ![Main Dark](assets/main-dark.png) | ![Main Light](assets/main-light.png) |
+
+<details>
+<summary>🔍 View More Screenshots (Settings & Overlay)</summary>
+<br>
+
+### ⚙️ Settings Menu
+| Settings - Dark Mode | Settings - Light Mode |
+| :---: | :---: |
+| ![Settings Dark](assets/settings-dark.png) | ![Settings Light](assets/settings-light.png) |
+
+### 📺 Smart Overlay
+| Overlay Enabled | Overlay Disabled |
+| :---: | :---: |
+| ![Overlay On](assets/overlay-on.png) | ![Overlay Off](assets/overlay-off.png) |
+
+</details>
+
+---
+
 ## ⚠️ Disclaimer & Antivirus Notes
 
 > [!WARNING]
