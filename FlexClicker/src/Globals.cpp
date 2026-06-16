@@ -42,6 +42,7 @@ HWND hCheckOverlay    = NULL;
 HWND hCheckJitter     = NULL;
 HWND hRadioDark       = NULL;
 HWND hRadioLight      = NULL;
+HWND hwnd             = NULL;
 
 COLORREF colorDarkBg      = RGB(35, 35, 35);
 COLORREF colorDarkElement = RGB(130, 130, 130);
@@ -123,6 +124,21 @@ void ApplyTheme(HWND hwnd) {
 
     SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
     RedrawWindow(hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE | RDW_ALLCHILDREN);
+}
+
+int ScalePixels(int pixels, HWND hwnd) {
+    UINT dpi = 96;
+    if (hwnd) {
+        dpi = GetDpiForWindow(hwnd);
+    }
+    else {
+        HDC hdc = GetDC(NULL);
+        if (hdc) {
+            dpi = GetDeviceCaps(hdc, LOGPIXELSX);
+            ReleaseDC(NULL, hdc);
+        }
+    }
+    return MulDiv(pixels, dpi, 96);
 }
 
 std::string GetKeyName(int vk) {

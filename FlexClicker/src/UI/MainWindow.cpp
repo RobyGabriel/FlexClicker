@@ -4,16 +4,44 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     switch (uMsg) {
     case WM_CREATE:
         hMainWnd = hwnd;
-        CreateWindowA("STATIC", "Set new CPS:", WS_VISIBLE | WS_CHILD, 20, 10, 120, 20, hwnd, NULL, NULL, NULL);
-        hEditCPS = CreateWindowA("EDIT", "10", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER, 140, 10, 50, 20, hwnd, NULL, NULL, NULL);
-        CreateWindowA("BUTTON", "APPLY", WS_VISIBLE | WS_CHILD, 20, 35, 170, 30, hwnd, (HMENU)1, NULL, NULL);
-        CreateWindowA("BUTTON", "SETTINGS", WS_VISIBLE | WS_CHILD, 20, 70, 170, 30, hwnd, (HMENU)2, NULL, NULL);
-        CreateWindowA("STATIC", "CPS:", WS_VISIBLE | WS_CHILD, 20, 110, 80, 20, hwnd, NULL, NULL, NULL);
-        hCurrentCPSLabel = CreateWindowA("STATIC", "10", WS_VISIBLE | WS_CHILD, 110, 110, 50, 20, hwnd, NULL, NULL, NULL);
-        CreateWindowA("STATIC", "STATUS:", WS_VISIBLE | WS_CHILD, 20, 140, 80, 20, hwnd, NULL, NULL, NULL);
-        hStatusLabel = CreateWindowA("STATIC", "STOPPED", WS_VISIBLE | WS_CHILD, 110, 140, 80, 20, hwnd, NULL, NULL, NULL);
-        hClickLabel = CreateWindowA("STATIC", "CLICK:", WS_VISIBLE | WS_CHILD, 20, 170, 80, 20, hwnd, NULL, NULL, NULL);
-        hTypeLabel = CreateWindowA("STATIC", "LEFT", WS_VISIBLE | WS_CHILD, 110, 170, 80, 20, hwnd, NULL, NULL, NULL);
+
+        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(290, hwnd), ScalePixels(320, hwnd), SWP_NOMOVE | SWP_NOZORDER);
+
+        CreateWindowA("STATIC", "Set new CPS:", WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(15, hwnd), ScalePixels(150, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        hEditCPS = CreateWindowA("EDIT", "10", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
+            ScalePixels(180, hwnd), ScalePixels(12, hwnd), ScalePixels(60, hwnd), ScalePixels(30, hwnd), hwnd, NULL, NULL, NULL);
+
+        CreateWindowA("BUTTON", "APPLY", WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(55, hwnd), ScalePixels(230, hwnd), ScalePixels(35, hwnd), hwnd, (HMENU)1, NULL, NULL);
+
+        CreateWindowA("BUTTON", "SETTINGS", WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(95, hwnd), ScalePixels(230, hwnd), ScalePixels(35, hwnd), hwnd, (HMENU)2, NULL, NULL);
+
+        CreateWindowA("STATIC", "CPS:", WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(145, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        hCurrentCPSLabel = CreateWindowA("STATIC", "10", WS_VISIBLE | WS_CHILD,
+            ScalePixels(140, hwnd), ScalePixels(145, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        CreateWindowA("STATIC", "STATUS:", WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(180, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        hStatusLabel = CreateWindowA("STATIC", "STOPPED", WS_VISIBLE | WS_CHILD,
+            ScalePixels(140, hwnd), ScalePixels(180, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        hClickLabel = CreateWindowA("STATIC", "CLICK:", WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(215, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        hTypeLabel = CreateWindowA("STATIC", "LEFT", WS_VISIBLE | WS_CHILD,
+            ScalePixels(140, hwnd), ScalePixels(215, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        EnumChildWindows(hwnd, [](HWND hChild, LPARAM lp) -> BOOL {
+            SendMessage(hChild, WM_SETFONT, (WPARAM)hFont, TRUE);
+            return TRUE;
+            }, 0);
+
         SetTimer(hwnd, 1, 100, NULL);
         ApplyTheme(hwnd);
         break;
@@ -86,7 +114,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         if (LOWORD(wParam) == 2) {
             if (!isSettingsOpen) {
                 HWND hSet = CreateWindowExA(0, "FlexSettings", "Settings", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
-                    500, 200, 280, 380, hwnd, NULL, GetModuleHandle(NULL), NULL);
+                    500, 200, ScalePixels(300, hwnd), ScalePixels(430, hwnd), hwnd, NULL, GetModuleHandle(NULL), NULL);
                 ShowWindow(hSet, SW_SHOW);
                 SetFocus(hSet);
             }

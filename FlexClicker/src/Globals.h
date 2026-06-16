@@ -33,8 +33,10 @@ extern COLORREF colorLightBg;
 extern COLORREF colorLightText;
 extern HWND hRadioDark, hRadioLight;
 extern HFONT hFont;
+extern HWND hwnd;
 
 void InitBrushes();
 void CleanupBrushes();
 void ApplyTheme(HWND hwnd);
 std::string GetKeyName(int vk);
+int ScalePixels(int pixels, HWND hwnd = NULL);

@@ -49,30 +49,60 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
     case WM_CREATE: {
         isSettingsOpen = true;
 
-        HWND g1 = CreateWindowA("BUTTON", "Input Configuration", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 5, 255, 65, hwnd, NULL, NULL, NULL);
-        hBtnMode = CreateWindowA("BUTTON", (currentMode == InputMode::MOUSE ? "Mode: MOUSE" : "Mode: KEYBOARD"), WS_VISIBLE | WS_CHILD, 15, 25, 235, 30, hwnd, (HMENU)15, NULL, NULL);
+        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(300, hwnd), ScalePixels(430, hwnd), SWP_NOMOVE | SWP_NOZORDER);
 
-        HWND g2 = CreateWindowA("BUTTON", "Hotkeys", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 75, 255, 85, hwnd, NULL, NULL, NULL);
-        CreateWindowA("STATIC", "Toggle (ON/OFF):", WS_VISIBLE | WS_CHILD, 15, 95, 120, 20, hwnd, NULL, NULL, NULL);
-        hBtnToggleSet = CreateWindowA("BUTTON", GetKeyName(toggleKey).c_str(), WS_VISIBLE | WS_CHILD, 165, 92, 80, 25, hwnd, (HMENU)10, NULL, NULL);
+        HWND g1 = CreateWindowA("BUTTON", "Input Configuration", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
+            ScalePixels(10, hwnd), ScalePixels(5, hwnd), ScalePixels(265, hwnd), ScalePixels(75, hwnd), hwnd, NULL, NULL, NULL);
 
-        hSwitchLabel = CreateWindowA("STATIC", "Switch (L/R): RCTRL+", WS_VISIBLE | WS_CHILD, 15, 123, 145, 20, hwnd, NULL, NULL, NULL);
-        hBtnSwitchSet = CreateWindowA("BUTTON", GetKeyName(switchKey).c_str(), WS_VISIBLE | WS_CHILD, 165, 120, 80, 25, hwnd, (HMENU)11, NULL, NULL);
+        hBtnMode = CreateWindowA("BUTTON", (currentMode == InputMode::MOUSE ? "Mode: MOUSE" : "Mode: KEYBOARD"), WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(28, hwnd), ScalePixels(245, hwnd), ScalePixels(35, hwnd), hwnd, (HMENU)15, NULL, NULL);
 
-        hLabelKeySet = CreateWindowA("STATIC", "Simulated Key:", WS_VISIBLE | WS_CHILD, 15, 123, 120, 20, hwnd, NULL, NULL, NULL);
-        hBtnKeySet = CreateWindowA("BUTTON", GetKeyName(selectedKey).c_str(), WS_VISIBLE | WS_CHILD, 165, 120, 80, 25, hwnd, (HMENU)14, NULL, NULL);
+        HWND g2 = CreateWindowA("BUTTON", "Hotkeys", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
+            ScalePixels(10, hwnd), ScalePixels(90, hwnd), ScalePixels(265, hwnd), ScalePixels(115, hwnd), hwnd, NULL, NULL, NULL);
 
-        HWND g3 = CreateWindowA("BUTTON", "Behavior", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 165, 255, 65, hwnd, NULL, NULL, NULL);
-        hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 15, 185, 200, 20, hwnd, (HMENU)12, NULL, NULL);
+        CreateWindowA("STATIC", "Toggle (ON/OFF):", WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(118, hwnd), ScalePixels(140, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        hBtnToggleSet = CreateWindowA("BUTTON", GetKeyName(toggleKey).c_str(), WS_VISIBLE | WS_CHILD,
+            ScalePixels(175, hwnd), ScalePixels(115, hwnd), ScalePixels(90, hwnd), ScalePixels(30, hwnd), hwnd, (HMENU)10, NULL, NULL);
+
+        hSwitchLabel = CreateWindowA("STATIC", "Switch (L/R): RCTRL+", WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(160, hwnd), ScalePixels(150, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        hBtnSwitchSet = CreateWindowA("BUTTON", GetKeyName(switchKey).c_str(), WS_VISIBLE | WS_CHILD,
+            ScalePixels(175, hwnd), ScalePixels(157, hwnd), ScalePixels(90, hwnd), ScalePixels(30, hwnd), hwnd, (HMENU)11, NULL, NULL);
+
+        hLabelKeySet = CreateWindowA("STATIC", "Simulated Key:", WS_VISIBLE | WS_CHILD,
+            ScalePixels(20, hwnd), ScalePixels(160, hwnd), ScalePixels(140, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
+
+        hBtnKeySet = CreateWindowA("BUTTON", GetKeyName(selectedKey).c_str(), WS_VISIBLE | WS_CHILD,
+            ScalePixels(175, hwnd), ScalePixels(157, hwnd), ScalePixels(90, hwnd), ScalePixels(30, hwnd), hwnd, (HMENU)14, NULL, NULL);
+
+        HWND g3 = CreateWindowA("BUTTON", "Behavior", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
+            ScalePixels(10, hwnd), ScalePixels(215, hwnd), ScalePixels(265, hwnd), ScalePixels(75, hwnd), hwnd, NULL, NULL, NULL);
+
+        hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX,
+            ScalePixels(20, hwnd), ScalePixels(237, hwnd), ScalePixels(240, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)12, NULL, NULL);
         SendMessage(hCheckOverlay, BM_SETCHECK, showOverlay ? BST_CHECKED : BST_UNCHECKED, 0);
 
-        hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 15, 205, 200, 20, hwnd, (HMENU)13, NULL, NULL);
+        hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX,
+            ScalePixels(20, hwnd), ScalePixels(262, hwnd), ScalePixels(240, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)13, NULL, NULL);
         SendMessage(hCheckJitter, BM_SETCHECK, useJitter ? BST_CHECKED : BST_UNCHECKED, 0);
 
-        HWND g4 = CreateWindowA("BUTTON", "Appearance", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 235, 255, 85, hwnd, NULL, NULL, NULL);
-        hRadioDark = CreateWindowA("BUTTON", "Dark Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON, 20, 257, 150, 20, hwnd, (HMENU)16, NULL, NULL);
-        hRadioLight = CreateWindowA("BUTTON", "Light Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON, 20, 285, 150, 20, hwnd, (HMENU)17, NULL, NULL);
+        HWND g4 = CreateWindowA("BUTTON", "Appearance", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
+            ScalePixels(10, hwnd), ScalePixels(300, hwnd), ScalePixels(265, hwnd), ScalePixels(85, hwnd), hwnd, NULL, NULL, NULL);
+
+        hRadioDark = CreateWindowA("BUTTON", "Dark Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
+            ScalePixels(25, hwnd), ScalePixels(322, hwnd), ScalePixels(200, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)16, NULL, NULL);
+
+        hRadioLight = CreateWindowA("BUTTON", "Light Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
+            ScalePixels(25, hwnd), ScalePixels(352, hwnd), ScalePixels(200, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)17, NULL, NULL);
         SendMessage(isDarkMode ? hRadioDark : hRadioLight, BM_SETCHECK, BST_CHECKED, 0);
+
+        EnumChildWindows(hwnd, [](HWND hChild, LPARAM lp) -> BOOL {
+            SendMessage(hChild, WM_SETFONT, (WPARAM)hFont, TRUE);
+            return TRUE;
+            }, 0);
 
         SetWindowSubclass(g1, GroupBoxSubclassProc, 101, 0);
         SetWindowSubclass(g2, GroupBoxSubclassProc, 102, 0);

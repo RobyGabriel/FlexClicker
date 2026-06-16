@@ -7,6 +7,9 @@
 
 #pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
+int mainWidth = ScalePixels(260, NULL);
+int mainHeight = ScalePixels(320, NULL);
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
     SetProcessDPIAware();
     InitBrushes();
@@ -26,8 +29,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     wco.hCursor = LoadCursor(NULL, IDC_ARROW); wco.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
     RegisterClassA(&wco);
 
-    HWND hwnd = CreateWindowExA(0, "FlexClicker", "FlexClicker", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
-        CW_USEDEFAULT, CW_USEDEFAULT, 230, 250, NULL, NULL, hInstance, NULL);
+    HWND hwnd = CreateWindowExA(0, "FlexClicker", "FlexClicker",
+        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
+        CW_USEDEFAULT, CW_USEDEFAULT, mainWidth, mainHeight, NULL, NULL, hInstance, NULL);
 
     hOverlay = CreateWindowExA(WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TOOLWINDOW, "FlexOverlay", NULL, WS_POPUP, 10, 10, 280, 30, NULL, NULL, hInstance, NULL);
     SetLayeredWindowAttributes(hOverlay, RGB(0, 0, 0), 200, LWA_COLORKEY | LWA_ALPHA);
