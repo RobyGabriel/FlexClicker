@@ -30,6 +30,10 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 * **Show Overlay:** Toggle a sleek, on-screen display.
 * **Overlay Location:** Customize where the overlay sits on your screen (Top-Left, Top-Right, etc.) for maximum visibility.
 * **Theme Support:** Switch seamlessly between **Dark Theme** and **Light Theme** to match your desktop setup.
+* **Built-in Audio Feedback:** Instant, eyes-free state confirmations out of the box:
+    * **High-pitch beep** when the clicker starts.
+    * **Low-pitch beep** when the clicker stops.
+    * **System notification chime** when swapping between mouse buttons.
 
 ### 📺 Smart Overlay
 Keep track of your settings in real-time with a lightweight, on-screen overlay showing:
