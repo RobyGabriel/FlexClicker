@@ -13,9 +13,25 @@ void LogicAutoclicker() {
     bool waitingForSwitchKey = false;
 
     while (true) {
-        if (isSettingsOpen.load()) { clickerActive = false; Sleep(10); continue; }
-        if (GetAsyncKeyState(toggleKey.load()) & 1) { clickerActive = !clickerActive; Beep(clickerActive ? 300 : 200, 50); }
-        if ((GetAsyncKeyState(VK_RCONTROL) < 0) && (GetAsyncKeyState(switchKey.load()) & 1)) { isLeftClick = !isLeftClick; MessageBeep(MB_ICONINFORMATION); }
+        if (isSettingsOpen.load()) { 
+            clickerActive = false; Sleep(10); continue; 
+        }
+
+        if (GetAsyncKeyState(toggleKey.load()) & 1) {
+            clickerActive = !clickerActive; Beep(clickerActive ? 300 : 200, 50); 
+        }
+
+        if ((GetAsyncKeyState(VK_RCONTROL) < 0) && (GetAsyncKeyState(switchKey.load()) & 1)) { 
+            isLeftClick = !isLeftClick; MessageBeep(MB_ICONINFORMATION); 
+
+            if (hOverlay) {
+                RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+            }
+        }
+
+        if (hOverlay) {
+            RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+        }
 
         if (clickerActive) {
             double baseDelay = 1000.0 / cps.load();

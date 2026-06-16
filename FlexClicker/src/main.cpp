@@ -51,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         CW_USEDEFAULT, CW_USEDEFAULT, mainWidth, mainHeight, NULL, NULL, hInstance, NULL);
 
     hOverlay = CreateWindowExA(WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TOOLWINDOW, "FlexOverlay", NULL, WS_POPUP, 10, 10, 450, 30, NULL, NULL, hInstance, NULL);
-    SetLayeredWindowAttributes(hOverlay, RGB(0, 0, 0), 200, LWA_COLORKEY | LWA_ALPHA);
+    SetLayeredWindowAttributes(hOverlay, 0, 220, LWA_ALPHA);
 
     if (showOverlay) ShowWindow(hOverlay, SW_SHOW);
 

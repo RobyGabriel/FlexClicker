@@ -135,6 +135,10 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         }
         if (LOWORD(wParam) == 13) {
             useJitter = (SendMessage(hCheckJitter, BM_GETCHECK, 0, 0) == BST_CHECKED);
+
+            if (hOverlay) {
+                RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+            }
         }
         if (LOWORD(wParam) == 14) {
             waitingForKeyboardKey = true;
@@ -149,6 +153,10 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             ShowWindow(hBtnKeySet, isKeyboard ? SW_SHOW : SW_HIDE);
             ShowWindow(hBtnSwitchSet, isKeyboard ? SW_HIDE : SW_SHOW);
             ShowWindow(hSwitchLabel, isKeyboard ? SW_HIDE : SW_SHOW);
+
+            if (hOverlay) {
+                RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+            }
         }
         if (LOWORD(wParam) == 16) {
             if (SendMessage(hRadioDark, BM_GETCHECK, 0, 0) == BST_CHECKED) {
@@ -227,6 +235,10 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             selectedKey = (int)wParam;
             waitingForKeyboardKey = false;
             SetWindowTextA(hBtnKeySet, GetKeyName(selectedKey.load()).c_str());
+
+            if (hOverlay) {
+                RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+            }
         }
         return 0;
     case WM_SYSKEYDOWN:
@@ -246,6 +258,10 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             selectedKey = (int)wParam;
             waitingForKeyboardKey = false;
             SetWindowTextA(hBtnKeySet, GetKeyName(selectedKey).c_str());
+
+            if (hOverlay) {
+                RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+            }
         }
         break;
     case WM_DESTROY: isSettingsOpen = false; break;

@@ -29,10 +29,32 @@ LRESULT CALLBACK OverlayProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         text += " | " + std::to_string(cps.load()) + " CPS";
         if (useJitter) text += " | Jitter";
 
+        SIZE textSize;
+        GetTextExtentPoint32A(hdc, text.c_str(), (int)text.length(), &textSize);
+
+        int paddingX = ScalePixels(10, hwnd);
+        int paddingY = ScalePixels(10, hwnd);
+
+        int newWidth = textSize.cx + paddingX;
+        int newHeight = textSize.cy + paddingY;
+
+        RECT rect;
+        GetWindowRect(hwnd, &rect);
+
+        SetWindowPos(hwnd, NULL, 0, 0, newWidth, newHeight, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOREDRAW);
+
+        RECT rc;
+        GetClientRect(hwnd, &rc);
+        FillRect(hdc, &rc, (HBRUSH)GetStockObject(BLACK_BRUSH));
+
         SetTextColor(hdc, clickerActive ? RGB(0, 255, 0) : RGB(255, 0, 0));
         SetBkMode(hdc, TRANSPARENT);
-        int textOffset = ScalePixels(5, hwnd);
-        TextOutA(hdc, 5, 5, text.c_str(), (int)text.length());
+
+        int textOffsetX = paddingX / 2;
+        int textOffsetY = (rc.bottom - textSize.cy) / 2;
+
+        TextOutA(hdc, textOffsetX, textOffsetY, text.c_str(), (int)text.length());   
+        
         SelectObject(hdc, hOldFont);
         DeleteObject(hOverlayFont);
         EndPaint(hwnd, &ps);

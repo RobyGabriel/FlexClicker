@@ -61,7 +61,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             }
 
             InvalidateRect(hStatusLabel, NULL, TRUE);
-            if (showOverlay) InvalidateRect(hOverlay, NULL, TRUE);
+            if (showOverlay && hOverlay) {
+                RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+            }
         }
         break;
     case WM_CTLCOLORSTATIC: {
@@ -108,7 +110,17 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         if (LOWORD(wParam) == 1) {
             char buffer[10];
             GetWindowTextA(hEditCPS, buffer, 10);
-            try { int newCPS = std::stoi(buffer); if (newCPS > 0) cps = newCPS; }
+            try {
+                int newCPS = std::stoi(buffer);
+
+                if (newCPS > 0) {
+                    cps = newCPS;
+
+                    if (hOverlay) {
+                        RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+                    }
+                }
+            }
             catch (...) {}
         }
         if (LOWORD(wParam) == 2) {
