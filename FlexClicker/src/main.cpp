@@ -4,6 +4,7 @@
 #include "UI/Settings.h"
 #include "UI/Overlay.h"
 #include <thread>
+#include "../resource.h"
 
 #pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
@@ -16,14 +17,30 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     std::thread t(LogicAutoclicker);
     t.detach();
 
-    WNDCLASSA wc = { 0 }, wcs = { 0 }, wco = { 0 };
-    wc.lpfnWndProc = WindowProc; wc.hInstance = hInstance; wc.lpszClassName = "FlexClicker";
-    wc.hCursor = LoadCursor(NULL, IDC_ARROW); wc.hbrBackground = hBrushDarkBg;
-    RegisterClassA(&wc);
+    WNDCLASSEXA wc = { 0 }, wcs = { 0 };
+    WNDCLASSA wco = { 0 };
 
-    wcs.lpfnWndProc = SettingsProc; wcs.hInstance = hInstance; wcs.lpszClassName = "FlexSettings";
-    wcs.hCursor = LoadCursor(NULL, IDC_ARROW); wcs.hbrBackground = hBrushDarkBg;
-    RegisterClassA(&wcs);
+    wc.cbSize = sizeof(WNDCLASSEXA);
+    wc.style = CS_HREDRAW | CS_VREDRAW;
+    wc.lpfnWndProc = WindowProc;
+    wc.hInstance = hInstance;
+    wc.lpszClassName = "FlexClicker";
+    wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+    wc.hbrBackground = hBrushDarkBg;
+    wc.hIcon = LoadIconA(hInstance, MAKEINTRESOURCEA(IDI_ICON1));
+    wc.hIconSm = LoadIconA(hInstance, MAKEINTRESOURCEA(IDI_ICON1));
+    RegisterClassExA(&wc);
+
+    wcs.cbSize = sizeof(WNDCLASSEXA);
+    wcs.style = CS_HREDRAW | CS_VREDRAW;
+    wcs.lpfnWndProc = SettingsProc;
+    wcs.hInstance = hInstance;
+    wcs.lpszClassName = "FlexSettings";
+    wcs.hCursor = LoadCursor(NULL, IDC_ARROW);
+    wcs.hbrBackground = hBrushDarkBg;
+    wcs.hIcon = LoadIconA(hInstance, MAKEINTRESOURCEA(IDI_ICON1));
+    wcs.hIconSm = LoadIconA(hInstance, MAKEINTRESOURCEA(IDI_ICON1));
+    RegisterClassExA(&wcs);
 
     wco.lpfnWndProc = OverlayProc; wco.hInstance = hInstance; wco.lpszClassName = "FlexOverlay";
     wco.hCursor = LoadCursor(NULL, IDC_ARROW); wco.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));

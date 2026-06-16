@@ -147,11 +147,18 @@
     <ClCompile Include="src\UI\Settings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\Logic\Logic.h" />
     <ClInclude Include="src\UI\MainWindow.h" />
     <ClInclude Include="src\UI\Overlay.h" />
     <ClInclude Include="src\UI\Settings.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\FlexClicker_logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
