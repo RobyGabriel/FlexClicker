@@ -5,13 +5,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     case WM_CREATE:
         hMainWnd = hwnd;
 
-        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(290, hwnd), ScalePixels(320, hwnd), SWP_NOMOVE | SWP_NOZORDER);
+        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(290, hwnd), ScalePixels(290, hwnd), SWP_NOMOVE | SWP_NOZORDER);
 
         CreateWindowA("STATIC", "Set new CPS:", WS_VISIBLE | WS_CHILD,
             ScalePixels(20, hwnd), ScalePixels(15, hwnd), ScalePixels(150, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
         hEditCPS = CreateWindowA("EDIT", "10", WS_VISIBLE | WS_CHILD | WS_BORDER | ES_NUMBER,
-            ScalePixels(180, hwnd), ScalePixels(12, hwnd), ScalePixels(60, hwnd), ScalePixels(30, hwnd), hwnd, NULL, NULL, NULL);
+            ScalePixels(190, hwnd), ScalePixels(12, hwnd), ScalePixels(60, hwnd), ScalePixels(30, hwnd), hwnd, NULL, NULL, NULL);
 
         CreateWindowA("BUTTON", "APPLY", WS_VISIBLE | WS_CHILD,
             ScalePixels(20, hwnd), ScalePixels(55, hwnd), ScalePixels(230, hwnd), ScalePixels(35, hwnd), hwnd, (HMENU)1, NULL, NULL);
