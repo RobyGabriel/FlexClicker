@@ -86,7 +86,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         if (LOWORD(wParam) == 2) {
             if (!isSettingsOpen) {
                 HWND hSet = CreateWindowExA(0, "FlexSettings", "Settings", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
-                    500, 200, 280, 360, hwnd, NULL, GetModuleHandle(NULL), NULL);
+                    500, 200, 280, 380, hwnd, NULL, GetModuleHandle(NULL), NULL);
                 ShowWindow(hSet, SW_SHOW);
                 SetFocus(hSet);
             }

@@ -66,7 +66,7 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 15, 185, 200, 20, hwnd, (HMENU)12, NULL, NULL);
         SendMessage(hCheckOverlay, BM_SETCHECK, showOverlay ? BST_CHECKED : BST_UNCHECKED, 0);
 
-        hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter (Randomness)", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 15, 205, 200, 20, hwnd, (HMENU)13, NULL, NULL);
+        hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX, 15, 205, 200, 20, hwnd, (HMENU)13, NULL, NULL);
         SendMessage(hCheckJitter, BM_SETCHECK, useJitter ? BST_CHECKED : BST_UNCHECKED, 0);
 
         HWND g4 = CreateWindowA("BUTTON", "Appearance", WS_VISIBLE | WS_CHILD | BS_GROUPBOX, 5, 235, 255, 85, hwnd, NULL, NULL, NULL);

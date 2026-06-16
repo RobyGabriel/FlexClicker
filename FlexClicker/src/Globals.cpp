@@ -65,7 +65,7 @@ void InitBrushes() {
     hBrushDarkElement = CreateSolidBrush(colorDarkElement);
     hBrushLightBg     = CreateSolidBrush(colorLightBg);
     hBrushEditDark    = CreateSolidBrush(colorDarkElement);
-    hFont = CreateFontA(15, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+    hFont = CreateFontA(20, 0, 0, 0, FW_MEDIUM, FALSE, FALSE, FALSE,
         DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
         CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Consolas");
 }
