@@ -22,7 +22,7 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 | ![Settings Dark](assets/settings-dark.png) | ![Settings Light](assets/settings-light.png) |
 
 ### 📺 Smart Overlay
-| Overlay Enabled | Overlay Disabled |
+| Overlay (Status: RUNNING) | Overlay (Status: STOPPED) |
 | :---: | :---: |
 | ![Overlay On](assets/overlay-on.png) | ![Overlay Off](assets/overlay-off.png) |
 
