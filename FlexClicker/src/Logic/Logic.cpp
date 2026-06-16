@@ -42,7 +42,9 @@ void LogicAutoclicker() {
         if (clickerActive) {
             double baseDelay = 1000.0 / cps.load();
             double delayFinal = baseDelay;
-            if (useJitter.load()) { std::uniform_real_distribution<double> dist(-baseDelay * 0.2, baseDelay * 0.2); delayFinal += dist(generator); }
+            if (useJitter.load()) { 
+                std::uniform_real_distribution<double> dist(-baseDelay * 0.2, baseDelay * 0.2); delayFinal += dist(generator);
+            }
             auto t1 = std::chrono::high_resolution_clock::now();
             if (currentMode == InputMode::MOUSE) {
                 INPUT input = { 0 }; input.type = INPUT_MOUSE;
