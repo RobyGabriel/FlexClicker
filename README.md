@@ -7,8 +7,12 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 ---
 
 ## ⚠️ Disclaimer & Antivirus Notes
-* **Anti-Cheat Warning:** Use this tool responsibly. Using autoclickers in multiplayer games may violate their Terms of Service and result in a ban. The "Jitter" feature reduces detection risks but does not guarantee immunity.
-* **False Positives:** This application uses low-level Windows APIs (SendInput, GetAsyncKeyState, and high-resolution timers) to simulate input and detect hotkeys. As a result, some antivirus software may incorrectly identify it as suspicious or flag it as a false positive. The source code is fully open and safe to audit.
+
+> [!WARNING]
+> **Anti-Cheat Warning:** Use this tool responsibly. Using autoclickers in multiplayer games may violate their Terms of Service and result in a ban. The "Jitter" feature reduces detection risks but does not guarantee immunity.
+
+> [!IMPORTANT]
+> **False Positives:** This application uses low-level Windows APIs (SendInput, GetAsyncKeyState, and high-resolution timers) to simulate input and detect hotkeys. As a result, some antivirus software may incorrectly identify it as suspicious or flag it as a false positive. The source code is fully open and safe to audit.
 
 ---
 
@@ -28,7 +32,7 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 
 ### 📺 Smart Overlay
 Keep track of your settings in real-time with a lightweight, on-screen overlay showing:
-* **Status:** On / Off
+* **Status:** `On` / `Off`
 * **Active Key:** The key being simulated (Keyboard Mode)
 * **Click Type:** Left / Right (Mouse Mode)
 * **Current CPS:** Real-time speed indicator
@@ -49,6 +53,7 @@ To build it from source:
 1. Clone the repository:
    ```bash
    git clone https://github.com/RobyGabriel/FlexClicker.git
+   cd FlexClicker
    ```
 2. Open the FlexClicker.slnx file in Visual Studio.
 
