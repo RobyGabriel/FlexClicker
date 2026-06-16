@@ -5,7 +5,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     case WM_CREATE:
         hMainWnd = hwnd;
 
-        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(290, hwnd), ScalePixels(290, hwnd), SWP_NOMOVE | SWP_NOZORDER);
+        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(285, hwnd), ScalePixels(290, hwnd), SWP_NOMOVE | SWP_NOZORDER);
 
         CreateWindowA("STATIC", "Set new CPS:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
             ScalePixels(20, hwnd), ScalePixels(15, hwnd), ScalePixels(130, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
@@ -19,7 +19,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         CreateWindowA("BUTTON", "SETTINGS", WS_VISIBLE | WS_CHILD,
             ScalePixels(20, hwnd), ScalePixels(95, hwnd), ScalePixels(230, hwnd), ScalePixels(35, hwnd), hwnd, (HMENU)2, NULL, NULL);
 
-        CreateWindowA("STATIC", "CPS:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
+        CreateWindowA("STATIC", "Current CPS:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
             ScalePixels(20, hwnd), ScalePixels(145, hwnd), ScalePixels(100, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
         hCurrentCPSLabel = CreateWindowA("STATIC", "10", WS_VISIBLE | WS_CHILD | SS_RIGHT | SS_CENTERIMAGE,
