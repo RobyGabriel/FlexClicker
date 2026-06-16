@@ -30,7 +30,7 @@ A lightweight, high-performance, and feature-rich autoclicker built natively in 
 * **Show Overlay:** Toggle a sleek, on-screen display.
 * **Overlay Location:** Customize where the overlay sits on your screen (Top-Left, Top-Right, etc.) for maximum visibility.
 * **Theme Support:** Switch seamlessly between **Dark Theme** and **Light Theme** to match your desktop setup.
-* **Built-in Audio Feedback:** Instant, eyes-free state confirmations out of the box:
+* **Audio Feedback:** Instant, eyes-free state confirmations:
     * **High-pitch beep** when the clicker starts.
     * **Low-pitch beep** when the clicker stops.
     * **System notification chime** when swapping between mouse buttons.
@@ -80,6 +80,7 @@ To build it from source:
 
 4. **Tweak Settings:** (Optional) 
     * Check **Enable Jitter** for natural timing variations.
+    * Check **Enable Audio Cues** to toggle the built-in sound feedback
     * Toggle **Show Overlay** to see your stats on screen.
     * Adjust **Overlay Location** via the dropdown to place the stats in your preferred screen corner (e.g., Top-Left, Bottom-Right).
     * Switch between **Dark Theme** and **Light Theme** using the theme toggle.
