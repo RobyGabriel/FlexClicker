@@ -18,11 +18,17 @@ void LogicAutoclicker() {
         }
 
         if (GetAsyncKeyState(toggleKey.load()) & 1) {
-            clickerActive = !clickerActive; Beep(clickerActive ? 300 : 200, 50); 
+            clickerActive = !clickerActive;
+            if (useAudio.load()) {
+                Beep(clickerActive ? 300 : 200, 50);
+            }
         }
 
         if ((GetAsyncKeyState(VK_RCONTROL) < 0) && (GetAsyncKeyState(switchKey.load()) & 1)) { 
-            isLeftClick = !isLeftClick; MessageBeep(MB_ICONINFORMATION); 
+            isLeftClick = !isLeftClick;
+            if (useAudio.load()) {
+                MessageBeep(MB_ICONINFORMATION);
+            }
 
             if (hOverlay) {
                 RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

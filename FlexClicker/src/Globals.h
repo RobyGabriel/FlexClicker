@@ -11,6 +11,7 @@ extern std::atomic<int> switchKey;
 extern std::atomic<bool> isSettingsOpen;
 extern std::atomic<bool> showOverlay;
 extern std::atomic<bool> useJitter;
+extern std::atomic<bool> useAudio;
 enum class InputMode { MOUSE, KEYBOARD };
 enum class OverlayPos { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT };
 extern std::atomic<OverlayPos> currentOverlayPos;
@@ -38,6 +39,7 @@ extern HFONT hFont;
 extern HWND hwnd;
 extern HWND hComboPos;
 extern HWND hToggleHintLabel;
+extern HWND hCheckAudio;
 
 void InitBrushes();
 void CleanupBrushes();

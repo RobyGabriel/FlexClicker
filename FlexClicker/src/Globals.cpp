@@ -16,6 +16,7 @@ std::atomic<int>       toggleKey(VK_PAUSE);
 std::atomic<int>       switchKey(VK_OEM_5);
 std::atomic<bool>      isSettingsOpen(false);
 std::atomic<bool>      showOverlay(true);
+std::atomic<bool>      useAudio(true);
 std::atomic<bool>      useJitter(false);
 std::atomic<InputMode> currentMode(InputMode::MOUSE);
 std::atomic<int>       selectedKey(VK_SPACE);
@@ -45,7 +46,8 @@ HWND hCheckJitter     = NULL;
 HWND hRadioDark       = NULL;
 HWND hRadioLight      = NULL;
 HWND hwnd             = NULL;
-HWND hComboPos = NULL;
+HWND hComboPos        = NULL;
+HWND hCheckAudio      = NULL;
 
 COLORREF colorDarkBg      = RGB(35, 35, 35);
 COLORREF colorDarkElement = RGB(130, 130, 130);
