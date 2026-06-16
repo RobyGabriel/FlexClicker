@@ -1,4 +1,4 @@
-# 🖱️ FlexClicker
+# 🖱️ FlexClicker <img src="https://img.shields.io/badge/License-All%20Rights%20Reserved-red.svg" alt="License" align="right" />
 
 ![FlexClicker](assets/banner.png)
 
