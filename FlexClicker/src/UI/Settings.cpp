@@ -248,11 +248,13 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             toggleKey = (int)wParam;
             waitingForToggleKey = false;
             SetWindowTextA(hBtnToggleSet, GetKeyName(toggleKey).c_str());
+            GetAsyncKeyState(toggleKey.load());
         }
         else if (waitingForSwitchKey) {
             switchKey = (int)wParam;
             waitingForSwitchKey = false;
             SetWindowTextA(hBtnSwitchSet, GetKeyName(switchKey).c_str());
+            GetAsyncKeyState(toggleKey.load());
         }
         else if (waitingForKeyboardKey) {
             selectedKey = (int)wParam;
