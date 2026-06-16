@@ -1,5 +1,7 @@
 # 🖱️ FlexClicker
 
+![FlexClicker](assets/banner.png)
+
 A lightweight, high-performance, and feature-rich autoclicker built natively in C++ using the WinAPI. Designed to automate both mouse clicks and keyboard presses with precision and zero overhead.
 
 ---
