@@ -5,8 +5,17 @@ LRESULT CALLBACK OverlayProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_PAINT: {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hwnd, &ps);
+        int scaledFontHeight = ScalePixels(20, hwnd);
 
-        HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);
+        HFONT hOverlayFont = CreateFontA(
+            scaledFontHeight, 0, 0, 0,
+            FW_BOLD,
+            FALSE, FALSE, FALSE,
+            DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+            CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Consolas"
+        );
+
+        HFONT hOldFont = (HFONT)SelectObject(hdc, hOverlayFont);
 
         std::string text = clickerActive ? "ON | " : "OFF | ";
 
@@ -22,8 +31,10 @@ LRESULT CALLBACK OverlayProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         SetTextColor(hdc, clickerActive ? RGB(0, 255, 0) : RGB(255, 0, 0));
         SetBkMode(hdc, TRANSPARENT);
+        int textOffset = ScalePixels(5, hwnd);
         TextOutA(hdc, 5, 5, text.c_str(), (int)text.length());
         SelectObject(hdc, hOldFont);
+        DeleteObject(hOverlayFont);
         EndPaint(hwnd, &ps);
     } break;
     case WM_NCHITTEST: return HTCAPTION;
