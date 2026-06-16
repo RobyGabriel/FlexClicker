@@ -60,19 +60,19 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         HWND g2 = CreateWindowA("BUTTON", "Hotkeys", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
             ScalePixels(10, hwnd), ScalePixels(90, hwnd), ScalePixels(265, hwnd), ScalePixels(115, hwnd), hwnd, NULL, NULL, NULL);
 
-        CreateWindowA("STATIC", "Toggle (ON/OFF):", WS_VISIBLE | WS_CHILD,
+        CreateWindowA("STATIC", "Toggle (ON/OFF):", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
             ScalePixels(20, hwnd), ScalePixels(118, hwnd), ScalePixels(140, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
         hBtnToggleSet = CreateWindowA("BUTTON", GetKeyName(toggleKey).c_str(), WS_VISIBLE | WS_CHILD,
             ScalePixels(175, hwnd), ScalePixels(115, hwnd), ScalePixels(90, hwnd), ScalePixels(30, hwnd), hwnd, (HMENU)10, NULL, NULL);
 
-        hSwitchLabel = CreateWindowA("STATIC", "Switch (L/R): RCTRL+", WS_VISIBLE | WS_CHILD,
+        hSwitchLabel = CreateWindowA("STATIC", "Switch (L/R): RCTRL+", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
             ScalePixels(20, hwnd), ScalePixels(160, hwnd), ScalePixels(150, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
         hBtnSwitchSet = CreateWindowA("BUTTON", GetKeyName(switchKey).c_str(), WS_VISIBLE | WS_CHILD,
             ScalePixels(175, hwnd), ScalePixels(157, hwnd), ScalePixels(90, hwnd), ScalePixels(30, hwnd), hwnd, (HMENU)11, NULL, NULL);
 
-        hLabelKeySet = CreateWindowA("STATIC", "Simulated Key:", WS_VISIBLE | WS_CHILD,
+        hLabelKeySet = CreateWindowA("STATIC", "Simulated Key:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
             ScalePixels(20, hwnd), ScalePixels(160, hwnd), ScalePixels(140, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
         hBtnKeySet = CreateWindowA("BUTTON", GetKeyName(selectedKey).c_str(), WS_VISIBLE | WS_CHILD,
