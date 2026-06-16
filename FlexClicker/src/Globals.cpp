@@ -33,6 +33,7 @@ HWND hCurrentCPSLabel = NULL;
 HWND hEditCPS         = NULL;
 HWND hTypeLabel       = NULL;
 HWND hClickLabel      = NULL;
+HWND hToggleHintLabel = NULL;
 HWND hLabelKeySet     = NULL;
 HWND hSwitchLabel     = NULL;
 HWND hBtnMode         = NULL;

@@ -31,7 +31,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     case WM_CREATE:
         hMainWnd = hwnd;
 
-        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(290, hwnd), ScalePixels(240, hwnd), SWP_NOMOVE | SWP_NOZORDER);
+        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(290, hwnd), ScalePixels(260, hwnd), SWP_NOMOVE | SWP_NOZORDER);
 
         CreateWindowA("STATIC", "Set target CPS:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
             ScalePixels(20, hwnd), ScalePixels(10, hwnd), ScalePixels(120, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
@@ -59,8 +59,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         hStatusLabel = CreateWindowA("STATIC", "STOPPED", WS_VISIBLE | WS_CHILD | SS_CENTER | SS_CENTERIMAGE,
             ScalePixels(150, hwnd), ScalePixels(115, hwnd), ScalePixels(110, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
+        hToggleHintLabel = CreateWindowA("STATIC", "Press [Key] to Start / Stop", WS_VISIBLE | WS_CHILD | SS_CENTER | SS_CENTERIMAGE,
+            ScalePixels(20, hwnd), ScalePixels(150, hwnd), ScalePixels(240, hwnd), ScalePixels(20, hwnd), hwnd, NULL, NULL, NULL);
+
         CreateWindowA("BUTTON", "SETTINGS", WS_VISIBLE | WS_CHILD | WS_TABSTOP,
-            ScalePixels(20, hwnd), ScalePixels(155, hwnd), ScalePixels(240, hwnd), ScalePixels(32, hwnd), hwnd, (HMENU)2, NULL, NULL);
+            ScalePixels(20, hwnd), ScalePixels(180, hwnd), ScalePixels(240, hwnd), ScalePixels(32, hwnd), hwnd, (HMENU)2, NULL, NULL);
 
         EnumChildWindows(hwnd, [](HWND hChild, LPARAM lp) -> BOOL {
             SendMessage(hChild, WM_SETFONT, (WPARAM)hFont, TRUE);
@@ -75,6 +78,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         if (wParam == 1) {
             SetWindowTextA(hStatusLabel, clickerActive ? "RUNNING" : "STOPPED");
             SetWindowTextA(hCurrentCPSLabel, std::to_string(cps.load()).c_str());
+
+            std::string dynamicHint = "Press [" + GetKeyName(toggleKey.load()) + "] to Start / Stop";
+            SetWindowTextA(hToggleHintLabel, dynamicHint.c_str());
+
             bool isKeyboard = (currentMode.load() == InputMode::KEYBOARD);
 
             if (isKeyboard) {
@@ -104,6 +111,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 SetTextColor(hdcStatic, RGB(255, 255, 255));
                 return (INT_PTR)hBrushRed;
             }
+        }
+        if (hwndStatic == hToggleHintLabel && isDarkMode) {
+            SetBkMode(hdcStatic, TRANSPARENT);
+            SetTextColor(hdcStatic, colorDarkText);
+            SetBkColor(hdcStatic, colorDarkBg);
+            return (INT_PTR)hBrushDarkBg;
         }
         if (isDarkMode) {
             SetBkMode(hdcStatic, TRANSPARENT);

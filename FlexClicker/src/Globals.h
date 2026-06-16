@@ -37,6 +37,7 @@ extern HWND hRadioDark, hRadioLight;
 extern HFONT hFont;
 extern HWND hwnd;
 extern HWND hComboPos;
+extern HWND hToggleHintLabel;
 
 void InitBrushes();
 void CleanupBrushes();
