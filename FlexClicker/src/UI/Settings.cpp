@@ -81,13 +81,13 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         HWND g3 = CreateWindowA("BUTTON", "Behavior", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
             ScalePixels(10, hwnd), ScalePixels(215, hwnd), ScalePixels(285, hwnd), ScalePixels(120, hwnd), hwnd, NULL, NULL, NULL);
 
-        hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX | BS_VCENTER,
-            ScalePixels(20, hwnd), ScalePixels(237, hwnd), ScalePixels(260, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)12, NULL, NULL);
-        SendMessage(hCheckOverlay, BM_SETCHECK, showOverlay ? BST_CHECKED : BST_UNCHECKED, 0);
-
         hCheckJitter = CreateWindowA("BUTTON", "Enable Jitter", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX | BS_VCENTER,
-            ScalePixels(20, hwnd), ScalePixels(267, hwnd), ScalePixels(260, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)13, NULL, NULL);
+            ScalePixels(20, hwnd), ScalePixels(237, hwnd), ScalePixels(260, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)13, NULL, NULL);
         SendMessage(hCheckJitter, BM_SETCHECK, useJitter ? BST_CHECKED : BST_UNCHECKED, 0);
+
+        hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX | BS_VCENTER,
+            ScalePixels(20, hwnd), ScalePixels(267, hwnd), ScalePixels(260, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)12, NULL, NULL);
+        SendMessage(hCheckOverlay, BM_SETCHECK, showOverlay ? BST_CHECKED : BST_UNCHECKED, 0);
 
         CreateWindowA("STATIC", "Overlay Location:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
             ScalePixels(20, hwnd), ScalePixels(297, hwnd), ScalePixels(130, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
