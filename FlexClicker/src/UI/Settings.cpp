@@ -49,7 +49,7 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
     case WM_CREATE: {
         isSettingsOpen = true;
 
-        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(300, hwnd), ScalePixels(430, hwnd), SWP_NOMOVE | SWP_NOZORDER);
+        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(300, hwnd), ScalePixels(510, hwnd), SWP_NOMOVE | SWP_NOZORDER);
 
         HWND g1 = CreateWindowA("BUTTON", "Input Configuration", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
             ScalePixels(10, hwnd), ScalePixels(5, hwnd), ScalePixels(265, hwnd), ScalePixels(75, hwnd), hwnd, NULL, NULL, NULL);
@@ -79,7 +79,7 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             ScalePixels(175, hwnd), ScalePixels(157, hwnd), ScalePixels(90, hwnd), ScalePixels(30, hwnd), hwnd, (HMENU)14, NULL, NULL);
 
         HWND g3 = CreateWindowA("BUTTON", "Behavior", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
-            ScalePixels(10, hwnd), ScalePixels(215, hwnd), ScalePixels(265, hwnd), ScalePixels(75, hwnd), hwnd, NULL, NULL, NULL);
+            ScalePixels(10, hwnd), ScalePixels(215, hwnd), ScalePixels(265, hwnd), ScalePixels(150, hwnd), hwnd, NULL, NULL, NULL);
 
         hCheckOverlay = CreateWindowA("BUTTON", "Show Screen Overlay", WS_VISIBLE | WS_CHILD | BS_AUTOCHECKBOX | BS_VCENTER,
             ScalePixels(20, hwnd), ScalePixels(237, hwnd), ScalePixels(240, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)12, NULL, NULL);
@@ -89,14 +89,27 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             ScalePixels(20, hwnd), ScalePixels(262, hwnd), ScalePixels(240, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)13, NULL, NULL);
         SendMessage(hCheckJitter, BM_SETCHECK, useJitter ? BST_CHECKED : BST_UNCHECKED, 0);
 
+        CreateWindowA("STATIC", "Overlay Location:", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
+            ScalePixels(20, hwnd), ScalePixels(300, hwnd), ScalePixels(240, hwnd), ScalePixels(20, hwnd), hwnd, NULL, NULL, NULL);
+
+        hComboPos = CreateWindowA("COMBOBOX", NULL, WS_VISIBLE | WS_CHILD | CBS_DROPDOWNLIST | WS_VSCROLL,
+            ScalePixels(20, hwnd), ScalePixels(325, hwnd), ScalePixels(245, hwnd), ScalePixels(150, hwnd), hwnd, (HMENU)18, NULL, NULL);
+
+        SendMessageA(hComboPos, CB_ADDSTRING, 0, (LPARAM)"Top Left");
+        SendMessageA(hComboPos, CB_ADDSTRING, 0, (LPARAM)"Top Right");
+        SendMessageA(hComboPos, CB_ADDSTRING, 0, (LPARAM)"Bottom Left");
+        SendMessageA(hComboPos, CB_ADDSTRING, 0, (LPARAM)"Bottom Right");
+
+        SendMessageA(hComboPos, CB_SETCURSEL, (WPARAM)currentOverlayPos.load(), 0);
+
         HWND g4 = CreateWindowA("BUTTON", "Appearance", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
-            ScalePixels(10, hwnd), ScalePixels(300, hwnd), ScalePixels(265, hwnd), ScalePixels(85, hwnd), hwnd, NULL, NULL, NULL);
+            ScalePixels(10, hwnd), ScalePixels(375, hwnd), ScalePixels(265, hwnd), ScalePixels(85, hwnd), hwnd, NULL, NULL, NULL);
 
         hRadioDark = CreateWindowA("BUTTON", "Dark Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON | BS_VCENTER,
-            ScalePixels(25, hwnd), ScalePixels(322, hwnd), ScalePixels(200, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)16, NULL, NULL);
+            ScalePixels(25, hwnd), ScalePixels(397, hwnd), ScalePixels(200, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)16, NULL, NULL);
 
         hRadioLight = CreateWindowA("BUTTON", "Light Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON | BS_VCENTER,
-            ScalePixels(25, hwnd), ScalePixels(352, hwnd), ScalePixels(200, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)17, NULL, NULL);
+            ScalePixels(25, hwnd), ScalePixels(427, hwnd), ScalePixels(200, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)17, NULL, NULL);
         SendMessage(isDarkMode ? hRadioDark : hRadioLight, BM_SETCHECK, BST_CHECKED, 0);
 
         EnumChildWindows(hwnd, [](HWND hChild, LPARAM lp) -> BOOL {
@@ -170,6 +183,16 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
                 isDarkMode = false;
                 ApplyTheme(hwnd);
                 ApplyTheme(hMainWnd);
+            }
+        }
+        if (LOWORD(wParam) == 18 && HIWORD(wParam) == CBN_SELCHANGE) {
+            int selectedIndex = (int)SendMessageA(hComboPos, CB_GETCURSEL, 0, 0);
+            if (selectedIndex != CB_ERR) {
+                currentOverlayPos = static_cast<OverlayPos>(selectedIndex);
+
+                if (hOverlay) {
+                    RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+                }
             }
         }
         break;

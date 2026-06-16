@@ -43,6 +43,8 @@ LRESULT CALLBACK OverlayProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
         SetWindowPos(hwnd, NULL, 0, 0, newWidth, newHeight, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOREDRAW);
 
+        UpdateOverlayPosition();
+
         RECT rc;
         GetClientRect(hwnd, &rc);
         FillRect(hdc, &rc, (HBRUSH)GetStockObject(BLACK_BRUSH));

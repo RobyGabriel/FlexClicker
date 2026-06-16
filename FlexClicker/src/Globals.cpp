@@ -19,6 +19,7 @@ std::atomic<bool>      showOverlay(true);
 std::atomic<bool>      useJitter(false);
 std::atomic<InputMode> currentMode(InputMode::MOUSE);
 std::atomic<int>       selectedKey(VK_SPACE);
+std::atomic<OverlayPos> currentOverlayPos(OverlayPos::TOP_LEFT);
 
 bool isDarkMode            = true;
 bool waitingForKeyboardKey = false;
@@ -43,6 +44,7 @@ HWND hCheckJitter     = NULL;
 HWND hRadioDark       = NULL;
 HWND hRadioLight      = NULL;
 HWND hwnd             = NULL;
+HWND hComboPos = NULL;
 
 COLORREF colorDarkBg      = RGB(35, 35, 35);
 COLORREF colorDarkElement = RGB(130, 130, 130);
@@ -209,4 +211,41 @@ std::string GetKeyName(int vk) {
     if (sc != 0 && GetKeyNameTextA(sc << 16, name, 64)) return std::string(name);
 
     return "Key " + std::to_string(vk);
+}
+
+void UpdateOverlayPosition() {
+    if (!hOverlay) return;
+
+    RECT rect;
+    GetWindowRect(hOverlay, &rect);
+    int width = rect.right - rect.left;
+    int height = rect.bottom - rect.top;
+
+    int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+
+    int margin = 10;
+    int newX = margin;
+    int newY = margin;
+
+    switch (currentOverlayPos.load()) {
+    case OverlayPos::TOP_LEFT:
+        newX = margin;
+        newY = margin;
+        break;
+    case OverlayPos::TOP_RIGHT:
+        newX = screenWidth - width - margin;
+        newY = margin;
+        break;
+    case OverlayPos::BOTTOM_LEFT:
+        newX = margin;
+        newY = screenHeight - height - margin;
+        break;
+    case OverlayPos::BOTTOM_RIGHT:
+        newX = screenWidth - width - margin;
+        newY = screenHeight - height - margin;
+        break;
+    }
+
+    SetWindowPos(hOverlay, NULL, newX, newY, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
