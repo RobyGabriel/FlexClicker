@@ -49,7 +49,7 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
     case WM_CREATE: {
         isSettingsOpen = true;
 
-        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(320, hwnd), ScalePixels(510, hwnd), SWP_NOMOVE | SWP_NOZORDER);
+        SetWindowPos(hwnd, NULL, 0, 0, ScalePixels(320, hwnd), ScalePixels(535, hwnd), SWP_NOMOVE | SWP_NOZORDER);
 
         HWND g1 = CreateWindowA("BUTTON", "Input Configuration", WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
             ScalePixels(10, hwnd), ScalePixels(5, hwnd), ScalePixels(285, hwnd), ScalePixels(75, hwnd), hwnd, NULL, NULL, NULL);
@@ -115,6 +115,9 @@ LRESULT CALLBACK SettingsProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         hRadioLight = CreateWindowA("BUTTON", "Light Theme", WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON | BS_VCENTER,
             ScalePixels(20, hwnd), ScalePixels(427, hwnd), ScalePixels(220, hwnd), ScalePixels(25, hwnd), hwnd, (HMENU)17, NULL, NULL);
         SendMessage(isDarkMode ? hRadioDark : hRadioLight, BM_SETCHECK, BST_CHECKED, 0);
+
+        CreateWindowA("STATIC", "Version 1.0.2  |  \u00A9 2026 RobyGabriel", WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE,
+            ScalePixels(23, hwnd), ScalePixels(467, hwnd), ScalePixels(310, hwnd), ScalePixels(25, hwnd), hwnd, NULL, NULL, NULL);
 
         EnumChildWindows(hwnd, [](HWND hChild, LPARAM lp) -> BOOL {
             SendMessage(hChild, WM_SETFONT, (WPARAM)hFont, TRUE);
