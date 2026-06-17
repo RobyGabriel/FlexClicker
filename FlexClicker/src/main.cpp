@@ -12,6 +12,22 @@ int mainWidth = ScalePixels(260, NULL);
 int mainHeight = ScalePixels(320, NULL);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
+    HANDLE hMutex = CreateMutexA(NULL, TRUE, "Local\\FlexClicker_Unique_Mutex_v1");
+
+    if (hMutex == NULL || GetLastError() == ERROR_ALREADY_EXISTS) {
+        HWND hExistingWnd = FindWindowA("FlexClicker", NULL);
+
+        if (hExistingWnd) {
+            if (IsIconic(hExistingWnd)) {
+                ShowWindow(hExistingWnd, SW_RESTORE);
+            }
+            SetForegroundWindow(hExistingWnd);
+        }
+
+        if (hMutex) CloseHandle(hMutex);
+        return 0;
+    }
+    
     SetProcessDPIAware();
     InitBrushes();
     std::thread t(LogicAutoclicker);
@@ -61,5 +77,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     MSG msg = { 0 };
     while (GetMessageA(&msg, NULL, 0, 0)) { TranslateMessage(&msg); DispatchMessageA(&msg); }
     CleanupBrushes();
+    ReleaseMutex(hMutex);
+    CloseHandle(hMutex);
     return 0;
 }
