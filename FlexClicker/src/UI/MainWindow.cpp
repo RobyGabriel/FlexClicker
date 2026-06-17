@@ -9,12 +9,23 @@ void UpdateCPSFromEdit() {
         int newCPS = std::stoi(buffer);
         if (newCPS > 0 && newCPS <= 999) {
             cps = newCPS;
+            SetWindowTextA(hEditCPS, std::to_string(newCPS).c_str());
             if (hOverlay) {
                 RedrawWindow(hOverlay, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
             }
         }
+        else if (newCPS > 999) {
+            cps = 999;
+            SetWindowTextA(hEditCPS, "999");
+        }
+        else if (newCPS <= 0) {
+            cps = 10;
+            SetWindowTextA(hEditCPS, "10");
+        }
     }
-    catch (...) {}
+    catch (...) {
+        SetWindowTextA(hEditCPS, std::to_string(cps.load()).c_str());
+    }
 }
 
 LRESULT CALLBACK EditSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData) {
