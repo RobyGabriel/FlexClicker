@@ -7,6 +7,7 @@ Release/
 *.user
 *.suo
 *.log
+*.aps
 
 # Build outputs
 bin/
